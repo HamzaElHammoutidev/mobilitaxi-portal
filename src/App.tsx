@@ -17,8 +17,10 @@ import Search from '@/pages/Search/Search';
 import Services from '@/pages/Services/Services';
 import ServicesList from '@/pages/Services/ServicesList';
 import ServiceDetails from '@/pages/Services/ServiceDetails';
-import QuotesList from '@/pages/Services/QuotesList';
 import QuoteDetails from '@/pages/Services/QuoteDetails';
+
+// Finances
+import Finances from '@/pages/Finances/Finances';
 
 // Vehicles
 import VehiclesList from '@/pages/Vehicles/VehiclesList';
@@ -38,7 +40,6 @@ import AppointmentNew from '@/pages/Appointments/AppointmentNew';
 import HistoryList from '@/pages/History/HistoryList';
 import DocumentsList from '@/pages/Documents/DocumentsList';
 import DocumentScan from '@/pages/Documents/DocumentScan';
-import InvoicesList from '@/pages/Invoices/InvoicesList';
 import InvoiceDetails from '@/pages/Invoices/InvoiceDetails';
 
 // Profile pages
@@ -82,8 +83,11 @@ function App() {
                   <Route path="/services" element={<Services />} />
                   <Route path="/services/list" element={<ServicesList />} />
                   <Route path="/services/:id" element={<ServiceDetails />} />
-                  <Route path="/services/quotes" element={<QuotesList />} />
+                  
+                  {/* Finances routes */}
+                  <Route path="/finances" element={<Finances />} />
                   <Route path="/services/quotes/:id" element={<QuoteDetails />} />
+                  <Route path="/invoices/:id" element={<InvoiceDetails />} />
                   
                   {/* Vehicle routes */}
                   <Route path="/vehicles" element={<VehiclesList />} />
@@ -103,8 +107,6 @@ function App() {
                   <Route path="/history" element={<HistoryList />} />
                   <Route path="/documents" element={<DocumentsList />} />
                   <Route path="/documents/scan" element={<DocumentScan />} />
-                  <Route path="/invoices" element={<InvoicesList />} />
-                  <Route path="/invoices/:id" element={<InvoiceDetails />} />
                   
                   {/* Profile routes */}
                   <Route path="/profile" element={<Profile />} />
