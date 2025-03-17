@@ -1,11 +1,9 @@
 
 import React from 'react';
-import MobileLayout from '@/components/layout/MobileLayout';
-import { Card, CardContent } from '@/components/ui/card';
-import { Car, Calendar, FileText, MapPin, Phone } from 'lucide-react';
+import { Link, useNavigate } from 'react-router-dom';
+import { Car, Calendar, FileText, MapPin, AlertTriangle, Menu, History, FileCheck, Settings, HelpCircle } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { useAuth } from '@/contexts/AuthContext';
-import { useNavigate } from 'react-router-dom';
 
 const Index = () => {
   const { user, isAuthenticated, logout } = useAuth();
@@ -39,78 +37,130 @@ const Index = () => {
   }
 
   return (
-    <MobileLayout>
-      <div className="p-4">
-        <div className="mb-6">
-          <h2 className="text-xl font-semibold mb-2">Bonjour, {user?.name}</h2>
-          <p className="text-gray-600">
-            {user?.status === 'pending' 
-              ? 'Votre compte est en attente de validation.'
-              : 'Bienvenue sur votre portail Centre du Taxi.'}
-          </p>
-        </div>
-
-        <div className="grid grid-cols-2 gap-4 mb-6">
-          <Card className="bg-white shadow-sm hover:shadow-md transition-shadow">
-            <CardContent className="p-4 flex flex-col items-center">
-              <div className="bg-taxi-yellow/20 p-3 rounded-full mb-2">
-                <Calendar className="text-taxi-blue" size={24} />
-              </div>
-              <span className="text-sm font-medium">Rendez-vous</span>
-            </CardContent>
-          </Card>
-          
-          <Card className="bg-white shadow-sm hover:shadow-md transition-shadow">
-            <CardContent className="p-4 flex flex-col items-center">
-              <div className="bg-taxi-yellow/20 p-3 rounded-full mb-2">
-                <Car className="text-taxi-blue" size={24} />
-              </div>
-              <span className="text-sm font-medium">Véhicules</span>
-            </CardContent>
-          </Card>
-          
-          <Card className="bg-white shadow-sm hover:shadow-md transition-shadow">
-            <CardContent className="p-4 flex flex-col items-center">
-              <div className="bg-taxi-yellow/20 p-3 rounded-full mb-2">
-                <FileText className="text-taxi-blue" size={24} />
-              </div>
-              <span className="text-sm font-medium">Services</span>
-            </CardContent>
-          </Card>
-          
-          <Card className="bg-white shadow-sm hover:shadow-md transition-shadow">
-            <CardContent className="p-4 flex flex-col items-center">
-              <div className="bg-taxi-yellow/20 p-3 rounded-full mb-2">
-                <MapPin className="text-taxi-blue" size={24} />
-              </div>
-              <span className="text-sm font-medium">Centres</span>
-            </CardContent>
-          </Card>
+    <div className="app-container flex flex-col min-h-screen bg-gray-100">
+      {/* Header */}
+      <header className="bg-white p-4 flex items-center justify-between shadow-sm">
+        <h1 className="text-xl font-bold text-gray-800">Centre du Taxi</h1>
+        <Menu className="text-gray-800" />
+      </header>
+      
+      {/* Main content */}
+      <main className="flex-1 pb-20">
+        {/* Hero section */}
+        <div className="hero-section">
+          <h2 className="hero-title">Votre partenaire de confiance</h2>
+          <p className="hero-text">pour l'entretien de votre taxi</p>
+          <Button 
+            className="bg-gray-800 hover:bg-gray-700 text-white font-semibold py-3 px-6 rounded-lg"
+            onClick={() => navigate('/appointments/new')}
+          >
+            Prendre un rendez-vous
+          </Button>
         </div>
         
-        <Card className="bg-taxi-yellow/10 border-taxi-yellow mb-6">
-          <CardContent className="p-4">
-            <div className="flex items-center">
-              <div className="bg-taxi-yellow p-2 rounded-full mr-3">
-                <Phone className="text-taxi-dark" size={20} />
-              </div>
-              <div>
-                <h3 className="font-medium text-taxi-dark">Besoin d'aide?</h3>
-                <p className="text-sm text-gray-600">Contactez notre équipe de support</p>
-              </div>
+        {/* Icon navigation */}
+        <div className="icon-group">
+          <div className="icon-item">
+            <div className="icon-container">
+              <MapPin className="h-6 w-6 text-gray-800" />
             </div>
-          </CardContent>
-        </Card>
+            <span className="icon-label">Géolocalisation</span>
+          </div>
+          
+          <div className="icon-item">
+            <div className="icon-container">
+              <Calendar className="h-6 w-6 text-gray-800" />
+            </div>
+            <span className="icon-label">Rendez-vous</span>
+          </div>
+          
+          <div className="icon-item">
+            <div className="icon-container">
+              <FileText className="h-6 w-6 text-gray-800" />
+            </div>
+            <span className="icon-label">Devis</span>
+          </div>
+          
+          <div className="icon-item">
+            <div className="icon-container">
+              <AlertTriangle className="h-6 w-6 text-gray-800" />
+            </div>
+            <span className="icon-label">Réclamations</span>
+          </div>
+        </div>
         
-        <Button 
-          variant="outline" 
-          className="w-full border-taxi-blue text-taxi-blue hover:bg-taxi-blue/10"
-          onClick={logout}
-        >
-          Se déconnecter
-        </Button>
-      </div>
-    </MobileLayout>
+        {/* Active files section */}
+        <div className="card-section">
+          <h3 className="card-title">Dossiers Actifs</h3>
+          <p className="card-subtitle">Vous avez 3 dossiers en cours.</p>
+          
+          <Button 
+            className="w-full bg-taxi-yellow hover:bg-taxi-yellow/90 text-gray-800 font-semibold py-3"
+            onClick={() => navigate('/vehicles')}
+          >
+            Voir les détails
+          </Button>
+        </div>
+        
+        {/* Feature grid */}
+        <div className="feature-grid mx-4">
+          <Link to="/history" className="feature-card">
+            <div className="mb-4 bg-taxi-yellow/30 p-4 rounded-full">
+              <History className="h-8 w-8 text-gray-800" />
+            </div>
+            <span className="text-sm font-semibold text-gray-800">Historique</span>
+          </Link>
+          
+          <Link to="/documents" className="feature-card">
+            <div className="mb-4 bg-taxi-yellow/30 p-4 rounded-full">
+              <FileCheck className="h-8 w-8 text-gray-800" />
+            </div>
+            <span className="text-sm font-semibold text-gray-800">Scanner Document</span>
+          </Link>
+          
+          <Link to="/settings" className="feature-card">
+            <div className="mb-4 bg-taxi-yellow/30 p-4 rounded-full">
+              <Settings className="h-8 w-8 text-gray-800" />
+            </div>
+            <span className="text-sm font-semibold text-gray-800">Paramètres</span>
+          </Link>
+          
+          <Link to="/help" className="feature-card">
+            <div className="mb-4 bg-taxi-yellow/30 p-4 rounded-full">
+              <HelpCircle className="h-8 w-8 text-gray-800" />
+            </div>
+            <span className="text-sm font-semibold text-gray-800">Aide</span>
+          </Link>
+        </div>
+      </main>
+      
+      {/* Bottom navigation */}
+      <nav className="bottom-nav">
+        <Link to="/" className="flex flex-col items-center text-sm text-taxi-yellow font-medium">
+          <div className="bg-taxi-yellow/20 p-2 rounded-full">
+            <Car size={20} className="text-taxi-yellow" />
+          </div>
+          <span>Accueil</span>
+        </Link>
+        
+        <Link to="/search" className="flex flex-col items-center text-sm text-gray-500">
+          <MapPin size={20} />
+          <span>Recherche</span>
+        </Link>
+        
+        <Link to="/services" className="flex flex-col items-center text-sm text-gray-500">
+          <FileText size={20} />
+          <span>Services</span>
+        </Link>
+        
+        <Link to="/profile" className="flex flex-col items-center text-sm text-gray-500">
+          <div className="bg-gray-200 p-2 rounded-full">
+            <Settings size={20} className="text-gray-500" />
+          </div>
+          <span>Profil</span>
+        </Link>
+      </nav>
+    </div>
   );
 };
 

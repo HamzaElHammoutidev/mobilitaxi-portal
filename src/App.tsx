@@ -25,6 +25,13 @@ const App = () => (
             <Route path="/login" element={<Login />} />
             <Route path="/register" element={<Register />} />
             <Route path="/registration-success" element={<RegistrationSuccess />} />
+            <Route path="/search" element={<NotFound />} />
+            <Route path="/services" element={<NotFound />} />
+            <Route path="/profile" element={<NotFound />} />
+            <Route path="/history" element={<NotFound />} />
+            <Route path="/documents" element={<NotFound />} />
+            <Route path="/settings" element={<NotFound />} />
+            <Route path="/help" element={<NotFound />} />
             <Route path="*" element={<NotFound />} />
           </Routes>
         </BrowserRouter>
