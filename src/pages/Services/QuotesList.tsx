@@ -2,57 +2,43 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
 import { Card, CardContent } from '@/components/ui/card';
-import { Button } from '@/components/ui/button';
-import { FileText, ChevronRight, AlertCircle, Plus } from 'lucide-react';
+import { FileText, ChevronRight, AlertCircle, CheckCircle, XCircle, Clock } from 'lucide-react';
 import MobileLayout from '@/components/layout/MobileLayout';
-import { useAuth } from '@/contexts/AuthContext';
-
-interface Quote {
-  id: string;
-  reference: string;
-  date: string;
-  amount: number;
-  status: 'pending' | 'accepted' | 'rejected' | 'expired';
-}
+import { useServices, Quote } from '@/contexts/ServiceContext';
 
 const QuotesList = () => {
-  const { user } = useAuth();
+  const { quotes } = useServices();
   
-  // Mock data for quotes
-  const quotes: Quote[] = [
-    {
-      id: 'q1',
-      reference: 'DEVIS-2024-001',
-      date: '2024-06-18',
-      amount: 155.50,
-      status: 'pending'
-    },
-    {
-      id: 'q2',
-      reference: 'DEVIS-2024-002',
-      date: '2024-06-10',
-      amount: 289.99,
-      status: 'accepted'
-    },
-    {
-      id: 'q3',
-      reference: 'DEVIS-2024-003',
-      date: '2024-05-30',
-      amount: 95.00,
-      status: 'expired'
+  // Helper function to get status display for quotes
+  const getQuoteStatusDisplay = (quote: Quote) => {
+    switch(quote.status) {
+      case 'approved':
+        return (
+          <span className="inline-flex items-center px-2 py-1 rounded-full text-xs font-medium bg-green-100 text-green-800">
+            <CheckCircle size={12} className="mr-1" />
+            Accepté
+          </span>
+        );
+      case 'rejected':
+        return (
+          <span className="inline-flex items-center px-2 py-1 rounded-full text-xs font-medium bg-red-100 text-red-800">
+            <XCircle size={12} className="mr-1" />
+            Refusé
+          </span>
+        );
+      default:
+        return (
+          <span className="inline-flex items-center px-2 py-1 rounded-full text-xs font-medium bg-amber-100 text-amber-800">
+            <Clock size={12} className="mr-1" />
+            En attente
+          </span>
+        );
     }
-  ];
+  };
   
   return (
     <MobileLayout title="Mes devis" showBackButton>
-      <div className="p-4">
-        <Button asChild className="w-full mb-6 bg-taxi-blue hover:bg-taxi-blue/90">
-          <Link to="/services">
-            <Plus className="mr-2 h-4 w-4" />
-            Demander un devis
-          </Link>
-        </Button>
-        
+      <div className="p-4 pb-20">
         {quotes.length > 0 ? (
           <div className="space-y-4">
             {quotes.map(quote => (
@@ -65,28 +51,16 @@ const QuotesList = () => {
                           <FileText className="h-5 w-5 text-taxi-yellow" />
                         </div>
                         <div>
-                          <p className="font-medium">{quote.reference}</p>
-                          <p className="text-sm text-gray-600">{quote.date}</p>
+                          <p className="font-medium">Devis #{quote.id.substring(0, 5)}</p>
+                          <p className="text-sm text-gray-600">{quote.createdAt}</p>
                           <div className="mt-1">
-                            <span className={`inline-flex items-center px-2 py-1 rounded-full text-xs font-medium ${
-                              quote.status === 'accepted' 
-                                ? 'bg-green-100 text-green-800' 
-                                : quote.status === 'pending'
-                                  ? 'bg-yellow-100 text-yellow-800'
-                                  : quote.status === 'rejected'
-                                    ? 'bg-red-100 text-red-800'
-                                    : 'bg-gray-100 text-gray-800'
-                            }`}>
-                              {quote.status === 'accepted' ? 'Accepté' : 
-                               quote.status === 'pending' ? 'En attente' : 
-                               quote.status === 'rejected' ? 'Refusé' : 'Expiré'}
-                            </span>
+                            {getQuoteStatusDisplay(quote)}
                           </div>
                         </div>
                       </div>
                       <div className="flex items-center gap-2">
                         <div className="text-right">
-                          <p className="font-medium">{quote.amount.toFixed(2)} €</p>
+                          <p className="font-medium">{quote.total.toFixed(2)} €</p>
                         </div>
                         <ChevronRight className="h-5 w-5 text-gray-400" />
                       </div>
@@ -101,7 +75,7 @@ const QuotesList = () => {
             <AlertCircle className="h-12 w-12 mx-auto mb-4 text-gray-400" />
             <h3 className="text-lg font-medium text-gray-900">Aucun devis</h3>
             <p className="mt-1 text-sm text-gray-500">
-              Vous n'avez pas encore de devis.
+              Vous n'avez pas encore de devis. Demandez un devis pour commencer.
             </p>
           </div>
         )}

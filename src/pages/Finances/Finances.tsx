@@ -121,7 +121,7 @@ const Finances = () => {
             
             {quotes.length > 0 ? (
               <div className="space-y-4">
-                {quotes.map(quote => (
+                {quotes.slice(0, 3).map(quote => (
                   <Link key={quote.id} to={`/services/quotes/${quote.id}`}>
                     <Card className="hover:bg-muted/50 transition-colors">
                       <CardContent className="p-4">
@@ -149,6 +149,14 @@ const Finances = () => {
                     </Card>
                   </Link>
                 ))}
+                
+                <Button 
+                  variant="outline" 
+                  className="w-full border-[#FFD500] text-gray-800 hover:bg-[#FFD500]/10"
+                  asChild
+                >
+                  <Link to="/services/quotes/list">Voir tous les devis</Link>
+                </Button>
               </div>
             ) : (
               <div className="text-center py-12">
@@ -165,7 +173,7 @@ const Finances = () => {
           <TabsContent value="invoices">
             {invoices.length > 0 ? (
               <div className="space-y-4">
-                {invoices.map(invoice => (
+                {invoices.slice(0, 3).map(invoice => (
                   <Link key={invoice.id} to={`/invoices/${invoice.id}`}>
                     <Card className="hover:bg-muted/50 transition-colors">
                       <CardContent className="p-4">
@@ -193,6 +201,14 @@ const Finances = () => {
                     </Card>
                   </Link>
                 ))}
+                
+                <Button 
+                  variant="outline" 
+                  className="w-full border-[#FFD500] text-gray-800 hover:bg-[#FFD500]/10"
+                  asChild
+                >
+                  <Link to="/invoices/list">Voir toutes les factures</Link>
+                </Button>
               </div>
             ) : (
               <div className="text-center py-12">

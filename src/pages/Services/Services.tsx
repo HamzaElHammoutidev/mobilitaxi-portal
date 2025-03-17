@@ -1,7 +1,7 @@
 
 import React from 'react';
 import { Link, useNavigate } from 'react-router-dom';
-import { FileText, Clock } from 'lucide-react';
+import { FileText, Clock, List } from 'lucide-react';
 import { Card, CardContent } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
 import { useServices } from '@/contexts/ServiceContext';
@@ -32,6 +32,24 @@ const Services = () => {
             asChild
           >
             <Link to="/services/list">Voir les services</Link>
+          </Button>
+        </div>
+        
+        {/* Quick Actions */}
+        <div className="flex justify-between gap-4 mb-6">
+          <Button 
+            className="flex-1 bg-taxi-blue hover:bg-taxi-blue/90"
+            onClick={handleRequestQuote}
+          >
+            Demander un devis
+          </Button>
+          <Button 
+            className="flex-1 bg-gray-100 hover:bg-gray-200 text-gray-800"
+            asChild
+          >
+            <Link to="/services/quotes/list">
+              <List className="mr-2 h-4 w-4" /> Mes devis
+            </Link>
           </Button>
         </div>
         
@@ -78,15 +96,6 @@ const Services = () => {
             <p className="text-gray-500">Aucun service récent</p>
           </div>
         )}
-        
-        <div className="mt-6">
-          <Button 
-            className="w-full bg-taxi-blue hover:bg-taxi-blue/90"
-            onClick={handleRequestQuote}
-          >
-            Demander un devis
-          </Button>
-        </div>
       </div>
       
       {/* Bottom Navigation */}

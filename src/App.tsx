@@ -1,3 +1,4 @@
+
 import { BrowserRouter as Router, Routes, Route, Navigate } from 'react-router-dom';
 import { Toaster } from '@/components/ui/sonner';
 import Index from '@/pages/Index';
@@ -16,11 +17,14 @@ import Search from '@/pages/Search/Search';
 import Services from '@/pages/Services/Services';
 import ServicesList from '@/pages/Services/ServicesList';
 import ServiceDetails from '@/pages/Services/ServiceDetails';
+import QuotesList from '@/pages/Services/QuotesList';
 import QuoteDetails from '@/pages/Services/QuoteDetails';
 import QuoteRequest from '@/pages/Services/QuoteRequest';
 
 // Finances
 import Finances from '@/pages/Finances/Finances';
+import InvoicesList from '@/pages/Invoices/InvoicesList';
+import InvoiceDetails from '@/pages/Invoices/InvoiceDetails';
 
 // Vehicles
 import VehiclesList from '@/pages/Vehicles/VehiclesList';
@@ -40,7 +44,6 @@ import AppointmentNew from '@/pages/Appointments/AppointmentNew';
 import HistoryList from '@/pages/History/HistoryList';
 import DocumentsList from '@/pages/Documents/DocumentsList';
 import DocumentScan from '@/pages/Documents/DocumentScan';
-import InvoiceDetails from '@/pages/Invoices/InvoiceDetails';
 
 // Profile pages
 import Profile from '@/pages/Profile/Profile';
@@ -84,10 +87,12 @@ function App() {
                   <Route path="/services/list" element={<ServicesList />} />
                   <Route path="/services/:id" element={<ServiceDetails />} />
                   <Route path="/services/quotes/request" element={<QuoteRequest />} />
+                  <Route path="/services/quotes/list" element={<QuotesList />} />
+                  <Route path="/services/quotes/:id" element={<QuoteDetails />} />
                   
                   {/* Finances routes */}
                   <Route path="/finances" element={<Finances />} />
-                  <Route path="/services/quotes/:id" element={<QuoteDetails />} />
+                  <Route path="/invoices/list" element={<InvoicesList />} />
                   <Route path="/invoices/:id" element={<InvoiceDetails />} />
                   
                   {/* Vehicle routes */}
