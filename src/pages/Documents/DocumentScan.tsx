@@ -1,4 +1,3 @@
-
 import React, { useState, useRef } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { Camera, Upload, File, X, Check, Folder } from 'lucide-react';
@@ -44,8 +43,6 @@ const DocumentScan = () => {
   };
   
   const handleCameraCapture = () => {
-    // In a real app, this would access the device camera
-    // For now, we'll just trigger the file input as a simulation
     if (fileInputRef.current) {
       fileInputRef.current.click();
     }
@@ -142,7 +139,9 @@ const DocumentScan = () => {
                   <SelectValue placeholder="Sélectionnez un dossier" />
                 </SelectTrigger>
                 <SelectContent>
-                  <SelectItem value="">Aucun dossier</SelectItem>
+                  <SelectItem key="no-folder" value="none">
+                    Aucun dossier
+                  </SelectItem>
                   {folders.map(folder => (
                     <SelectItem key={folder.id} value={folder.id}>
                       {folder.name}

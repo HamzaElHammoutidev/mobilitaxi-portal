@@ -1,4 +1,3 @@
-
 import React, { createContext, useContext, useState, useEffect, ReactNode } from 'react';
 import { toast } from 'sonner';
 
@@ -62,14 +61,12 @@ export const VehicleProvider: React.FC<VehicleProviderProps> = ({ children }) =>
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
-    // Load vehicles and folders from localStorage
     const storedVehicles = localStorage.getItem('taxiVehicles');
     const storedFolders = localStorage.getItem('taxiDocumentFolders');
     
     if (storedVehicles) {
       setVehicles(JSON.parse(storedVehicles));
     } else {
-      // Mock data for demo
       const mockVehicles: Vehicle[] = [
         {
           id: 'v1',
@@ -132,7 +129,6 @@ export const VehicleProvider: React.FC<VehicleProviderProps> = ({ children }) =>
     if (storedFolders) {
       setFolders(JSON.parse(storedFolders));
     } else {
-      // Default folders
       const defaultFolders: DocumentFolder[] = [
         { id: 'f1', name: 'Documents administratifs', icon: 'FileText', color: '#3498db' },
         { id: 'f2', name: 'Assurances', icon: 'Shield', color: '#2ecc71' },
@@ -155,14 +151,11 @@ export const VehicleProvider: React.FC<VehicleProviderProps> = ({ children }) =>
     try {
       setLoading(true);
       
-      // Mock API call
       await new Promise(resolve => setTimeout(resolve, 1500));
       
-      // Mock document URL (in a real app, this would be a URL from your file storage)
       const documentUrl = `/docs/${type.toLowerCase()}_${Date.now()}.pdf`;
       const documentId = `d${Date.now()}`;
       
-      // Update the vehicle with the new document
       const updatedVehicles = vehicles.map(vehicle => {
         if (vehicle.id === vehicleId) {
           const updatedDocuments = [
@@ -171,7 +164,7 @@ export const VehicleProvider: React.FC<VehicleProviderProps> = ({ children }) =>
               id: documentId,
               type,
               url: documentUrl,
-              folderId,
+              folderId: folderId && folderId !== 'none' ? folderId : undefined,
               dateAdded: new Date().toISOString().split('T')[0],
               expiryDate: type === 'Registration' || type === 'Insurance' 
                 ? new Date(new Date().setFullYear(new Date().getFullYear() + 1)).toISOString().split('T')[0]
@@ -204,7 +197,6 @@ export const VehicleProvider: React.FC<VehicleProviderProps> = ({ children }) =>
     try {
       setLoading(true);
       
-      // Mock API call
       await new Promise(resolve => setTimeout(resolve, 500));
       
       const newFolder: DocumentFolder = {
@@ -231,7 +223,6 @@ export const VehicleProvider: React.FC<VehicleProviderProps> = ({ children }) =>
     try {
       setLoading(true);
       
-      // Mock API call
       await new Promise(resolve => setTimeout(resolve, 500));
       
       const updatedFolders = folders.map(folder => {
@@ -262,14 +253,12 @@ export const VehicleProvider: React.FC<VehicleProviderProps> = ({ children }) =>
     try {
       setLoading(true);
       
-      // Mock API call
       await new Promise(resolve => setTimeout(resolve, 500));
       
       const updatedFolders = folders.filter(folder => folder.id !== id);
       setFolders(updatedFolders);
       localStorage.setItem('taxiDocumentFolders', JSON.stringify(updatedFolders));
       
-      // Update all documents that were in this folder to remove the folder reference
       const updatedVehicles = vehicles.map(vehicle => {
         const updatedDocuments = vehicle.documents.map(doc => {
           if (doc.folderId === id) {
@@ -293,12 +282,10 @@ export const VehicleProvider: React.FC<VehicleProviderProps> = ({ children }) =>
     }
   };
 
-  // New function to move a document to a different folder
   const moveDocumentToFolder = async (vehicleId: string, documentId: string, folderId: string | null) => {
     try {
       setLoading(true);
       
-      // Mock API call
       await new Promise(resolve => setTimeout(resolve, 500));
       
       const updatedVehicles = vehicles.map(vehicle => {
