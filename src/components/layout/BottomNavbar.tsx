@@ -1,7 +1,7 @@
 
 import React from 'react';
 import { Link, useLocation } from 'react-router-dom';
-import { Home, Calendar, Car, FileText, User } from 'lucide-react';
+import { Home, History, Car, FileText, User } from 'lucide-react';
 import { cn } from '@/lib/utils';
 
 const BottomNavbar: React.FC = () => {
@@ -10,7 +10,7 @@ const BottomNavbar: React.FC = () => {
   const navItems = [
     { title: 'Accueil', icon: Home, path: '/' },
     { title: 'Véhicules', icon: Car, path: '/vehicles' },
-    { title: 'Rendez-vous', icon: Calendar, path: '/appointments' },
+    { title: 'Historique', icon: History, path: '/history' },
     { title: 'Services', icon: FileText, path: '/services' },
     { title: 'Profil', icon: User, path: '/profile' },
   ];

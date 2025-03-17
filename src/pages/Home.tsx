@@ -4,7 +4,7 @@ import { Link } from 'react-router-dom';
 import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
 import { Separator } from '@/components/ui/separator';
-import { Calendar, Car, FileText, MapPin, Clock, AlertCircle, User, Check } from 'lucide-react';
+import { Calendar, Car, FileText, MapPin, Clock, AlertCircle, User, Check, History } from 'lucide-react';
 import MobileLayout from '@/components/layout/MobileLayout';
 import { useAuth } from '@/contexts/AuthContext';
 import { useAppointments } from '@/contexts/AppointmentContext';
@@ -67,11 +67,11 @@ const Home = () => {
         {/* Quick actions */}
         <h3 className="text-lg font-medium text-gray-800 mb-3">Actions rapides</h3>
         <div className="grid grid-cols-2 gap-3 mb-6">
-          <Link to="/appointments/new">
+          <Link to="/history">
             <Card className="hover:bg-muted/50 transition-colors">
               <CardContent className="p-4 flex flex-col items-center text-center">
-                <Calendar className="h-8 w-8 mb-2 text-taxi-blue" />
-                <span className="text-sm font-medium">Prendre rendez-vous</span>
+                <History className="h-8 w-8 mb-2 text-taxi-blue" />
+                <span className="text-sm font-medium">Historique</span>
               </CardContent>
             </Card>
           </Link>
