@@ -1,12 +1,13 @@
 
 import React from 'react';
 import { useParams, useNavigate, Link } from 'react-router-dom';
-import { MapPin, Phone, Clock, Calendar, Car, AlertTriangle } from 'lucide-react';
+import { MapPin, Phone, Clock, Calendar, Car, AlertTriangle, Map } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { Card, CardContent } from '@/components/ui/card';
 import { Separator } from '@/components/ui/separator';
 import MobileLayout from '@/components/layout/MobileLayout';
 import { useCenters } from '@/contexts/CenterContext';
+import LocationMap from '@/components/map/Map';
 
 const LocationDetails = () => {
   const { id } = useParams<{ id: string }>();
@@ -31,16 +32,6 @@ const LocationDetails = () => {
       </MobileLayout>
     );
   }
-  
-  const openingHours = [
-    { day: 'Lundi', hours: '08:00 - 18:00' },
-    { day: 'Mardi', hours: '08:00 - 18:00' },
-    { day: 'Mercredi', hours: '08:00 - 18:00' },
-    { day: 'Jeudi', hours: '08:00 - 18:00' },
-    { day: 'Vendredi', hours: '08:00 - 18:00' },
-    { day: 'Samedi', hours: '09:00 - 14:00' },
-    { day: 'Dimanche', hours: 'Fermé' }
-  ];
   
   return (
     <MobileLayout title="Détails du centre" showBackButton>
@@ -72,10 +63,12 @@ const LocationDetails = () => {
             <h3 className="font-medium mb-3">Horaires d'ouverture</h3>
             
             <div className="space-y-2">
-              {openingHours.map((item, index) => (
+              {center.hours.map((item, index) => (
                 <div key={index} className="flex justify-between">
                   <span className="text-gray-600">{item.day}</span>
-                  <span className="font-medium">{item.hours}</span>
+                  <span className="font-medium">
+                    {item.open === 'Fermé' ? 'Fermé' : `${item.open} - ${item.close}`}
+                  </span>
                 </div>
               ))}
             </div>
@@ -124,19 +117,32 @@ const LocationDetails = () => {
             <h3 className="font-medium mb-3">Adresse</h3>
             
             <div className="aspect-video bg-gray-200 rounded-md mb-3">
-              {/* Map would go here */}
-              <div className="w-full h-full flex items-center justify-center">
-                <MapPin className="h-8 w-8 text-gray-400" />
+              <div className="w-full h-full">
+                <LocationMap 
+                  initialCenter={[center.coordinates.lng, center.coordinates.lat]}
+                  initialZoom={15}
+                  showUserLocation={false}
+                />
               </div>
             </div>
             
             <p className="text-gray-600 mb-4">{center.address}</p>
             
-            <Button variant="outline" className="w-full" asChild>
-              <a href={`https://maps.google.com/?q=${encodeURIComponent(center.address)}`} target="_blank" rel="noopener noreferrer">
-                Ouvrir dans Google Maps
-              </a>
-            </Button>
+            <div className="flex gap-2">
+              <Button variant="outline" className="flex-1" asChild>
+                <a href={`https://maps.google.com/?q=${encodeURIComponent(center.address)}`} target="_blank" rel="noopener noreferrer">
+                  <Map className="h-4 w-4 mr-2" />
+                  Google Maps
+                </a>
+              </Button>
+              
+              <Button variant="outline" className="flex-1" asChild>
+                <Link to="/locations/map">
+                  <MapPin className="h-4 w-4 mr-2" />
+                  Tous les centres
+                </Link>
+              </Button>
+            </div>
           </CardContent>
         </Card>
       </div>

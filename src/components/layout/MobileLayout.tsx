@@ -76,17 +76,17 @@ const MobileLayout: React.FC<MobileLayoutProps> = ({
           <span>Accueil</span>
         </Link>
         
-        <Link to="/search" className={cn(
+        <Link to="/locations/map" className={cn(
           "flex flex-col items-center text-sm",
-          location.pathname === '/search' ? "text-taxi-yellow font-medium" : "text-gray-500"
+          location.pathname === '/locations/map' ? "text-taxi-yellow font-medium" : "text-gray-500"
         )}>
           <div className={cn(
             "p-2 rounded-full",
-            location.pathname === '/search' ? "bg-taxi-yellow/20" : ""
+            location.pathname === '/locations/map' ? "bg-taxi-yellow/20" : ""
           )}>
-            <MapPin size={20} className={location.pathname === '/search' ? "text-taxi-yellow" : ""} />
+            <MapPin size={20} className={location.pathname === '/locations/map' ? "text-taxi-yellow" : ""} />
           </div>
-          <span>Recherche</span>
+          <span>Carte</span>
         </Link>
         
         <Link to="/services" className={cn(

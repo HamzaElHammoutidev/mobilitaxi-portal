@@ -1,86 +1,55 @@
 
-import React, { useState } from 'react';
+import React from 'react';
 import { Link } from 'react-router-dom';
+import { MapPin, Phone, Car, Map } from 'lucide-react';
+import { Button } from '@/components/ui/button';
 import { Card, CardContent } from '@/components/ui/card';
-import { Input } from '@/components/ui/input';
-import { MapPin, Phone, Mail, Clock, Search } from 'lucide-react';
 import MobileLayout from '@/components/layout/MobileLayout';
 import { useCenters } from '@/contexts/CenterContext';
 
 const CentersList = () => {
-  const { centers } = useCenters();
-  const [searchQuery, setSearchQuery] = useState('');
-  
-  // Filter centers based on search query
-  const filteredCenters = centers.filter(center => 
-    center.name.toLowerCase().includes(searchQuery.toLowerCase()) ||
-    center.address.toLowerCase().includes(searchQuery.toLowerCase()) ||
-    center.city.toLowerCase().includes(searchQuery.toLowerCase())
-  );
+  const { centers, loading } = useCenters();
   
   return (
-    <MobileLayout title="Centres de service">
+    <MobileLayout title="Centres du Taxi" showBackButton>
       <div className="p-4">
-        <h2 className="text-xl font-bold mb-4">Trouver un centre</h2>
-        
-        <div className="mb-4">
-          <div className="relative">
-            <Search className="absolute left-2.5 top-2.5 h-4 w-4 text-muted-foreground" />
-            <Input
-              type="search"
-              placeholder="Rechercher par nom, adresse ou ville..."
-              className="pl-8"
-              value={searchQuery}
-              onChange={(e) => setSearchQuery(e.target.value)}
-            />
-          </div>
+        <div className="flex justify-between items-center mb-4">
+          <h2 className="text-xl font-semibold">Nos centres</h2>
+          <Link to="/locations/map">
+            <Button className="bg-taxi-yellow text-gray-800 hover:bg-taxi-yellow/90" size="sm">
+              <Map className="h-4 w-4 mr-1" /> Voir la carte
+            </Button>
+          </Link>
         </div>
         
-        {filteredCenters.length > 0 ? (
+        {loading ? (
+          <p className="text-center py-8 text-gray-500">Chargement des centres...</p>
+        ) : (
           <div className="space-y-4">
-            {filteredCenters.map(center => (
-              <Link to={`/locations/${center.id}`} key={center.id}>
-                <Card className="hover:bg-muted/50 transition-colors">
+            {centers.map((center) => (
+              <Link key={center.id} to={`/locations/${center.id}`}>
+                <Card className="cursor-pointer hover:shadow-md transition-shadow">
                   <CardContent className="p-4">
                     <div className="flex items-start gap-3">
-                      <div className="bg-taxi-blue rounded-full p-2 flex-shrink-0">
-                        <MapPin className="h-6 w-6 text-white" />
+                      <div className="bg-taxi-blue/10 p-3 rounded-full mt-1">
+                        <MapPin className="h-6 w-6 text-taxi-blue" />
                       </div>
                       <div>
                         <h3 className="font-medium">{center.name}</h3>
-                        <p className="text-sm text-gray-600">
-                          {center.address}, {center.city}, {center.postalCode}
-                        </p>
+                        <p className="text-sm text-gray-500">{center.address}</p>
+                        <p className="text-sm text-gray-500">{center.city}, {center.postalCode}</p>
                         
-                        <div className="mt-3 grid grid-cols-2 gap-2">
-                          <div className="flex items-center text-xs text-gray-600">
-                            <Phone size={12} className="mr-1" />
-                            {center.phone}
-                          </div>
-                          <div className="flex items-center text-xs text-gray-600">
-                            <Mail size={12} className="mr-1" />
-                            {center.email}
-                          </div>
-                        </div>
-                        
-                        <div className="mt-3">
-                          <p className="text-xs font-medium text-gray-700 mb-1">Heures d'ouverture:</p>
-                          <div className="grid grid-cols-2 gap-x-4 gap-y-1">
-                            {center.hours.slice(0, 3).map(hour => (
-                              <div key={hour.day} className="flex items-center text-xs text-gray-600">
-                                <Clock size={10} className="mr-1" />
-                                <span className="w-16 inline-block">{hour.day}:</span>
-                                {hour.open === 'Fermé' ? (
-                                  <span>Fermé</span>
-                                ) : (
-                                  <span>{hour.open} - {hour.close}</span>
-                                )}
-                              </div>
-                            ))}
-                            <div className="col-span-2 text-xs text-taxi-blue">
-                              Voir plus...
-                            </div>
-                          </div>
+                        <div className="flex mt-2 gap-2">
+                          <Button variant="outline" size="sm" className="text-xs" asChild>
+                            <a href={`tel:${center.phone}`}>
+                              <Phone className="h-3 w-3 mr-1" /> Appeler
+                            </a>
+                          </Button>
+                          <Button size="sm" className="text-xs bg-taxi-yellow text-gray-800 hover:bg-taxi-yellow/90" asChild>
+                            <Link to={`/locations/${center.id}`}>
+                              <Car className="h-3 w-3 mr-1" /> Services
+                            </Link>
+                          </Button>
                         </div>
                       </div>
                     </div>
@@ -88,11 +57,6 @@ const CentersList = () => {
                 </Card>
               </Link>
             ))}
-          </div>
-        ) : (
-          <div className="text-center py-8">
-            <MapPin className="h-12 w-12 mx-auto mb-3 text-muted-foreground" />
-            <p className="text-muted-foreground">Aucun centre trouvé</p>
           </div>
         )}
       </div>
