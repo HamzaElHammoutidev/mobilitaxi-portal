@@ -1,7 +1,7 @@
 
 import React, { useState } from 'react';
 import { Link, useLocation, useNavigate } from 'react-router-dom';
-import { Home, Calendar, Car, FileText, MapPin, Menu, Settings, X, User, LogOut, HelpCircle, Wallet } from 'lucide-react';
+import { Home, Calendar, Car, FileText, MapPin, Menu, Settings, X, User, LogOut, HelpCircle, Wallet, Star } from 'lucide-react';
 import { cn } from '@/lib/utils';
 import { Button } from '@/components/ui/button';
 import { Sheet, SheetContent, SheetHeader, SheetTitle, SheetClose } from '@/components/ui/sheet';
@@ -59,7 +59,7 @@ const MobileLayout: React.FC<MobileLayoutProps> = ({
   
   return (
     <div className="app-container flex flex-col min-h-screen bg-gray-100">
-      {/* Header */}
+      {/* Enhanced Header */}
       <header className="bg-white p-4 flex items-center justify-between shadow-sm">
         <div className="flex items-center">
           {showBackButton ? (
@@ -74,9 +74,20 @@ const MobileLayout: React.FC<MobileLayoutProps> = ({
               </svg>
             </Button>
           ) : null}
-          <h1 className="text-xl font-bold text-gray-800">
-            {title || 'Centre du Taxi'}
-          </h1>
+          <div className="flex items-center">
+            <div className="bg-[#FFD500] p-2 rounded-full mr-2 shadow-sm">
+              <Car size={20} className="text-gray-800" />
+            </div>
+            <div>
+              <h1 className="text-xl font-bold bg-gradient-to-r from-gray-800 via-gray-700 to-gray-900 bg-clip-text text-transparent">
+                {title || 'Centre du Taxi'}
+              </h1>
+              <div className="flex items-center text-xs text-gray-500">
+                <Star className="h-3 w-3 mr-1 text-[#FFD500]" />
+                <span>Service professionnel</span>
+              </div>
+            </div>
+          </div>
         </div>
         
         <div className="flex items-center gap-2">
