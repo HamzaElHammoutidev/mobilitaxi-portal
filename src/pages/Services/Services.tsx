@@ -7,13 +7,21 @@ import { Button } from '@/components/ui/button';
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
 import MobileLayout from '@/components/layout/MobileLayout';
 import { useServices } from '@/contexts/ServiceContext';
+import { useVehicles } from '@/contexts/VehicleContext';
 
 const Services = () => {
   const { services, quotes } = useServices();
+  const { vehicles } = useVehicles();
   
   // Filter quotes
   const pendingQuotes = quotes.filter(quote => quote.status === 'pending');
   const completedQuotes = quotes.filter(quote => quote.status === 'approved' || quote.status === 'rejected');
+  
+  // Get vehicle information for quotes
+  const getVehicleInfo = (vehicleId: string) => {
+    const vehicle = vehicles.find(v => v.id === vehicleId);
+    return vehicle ? vehicle.make + ' ' + vehicle.model : 'Véhicule';
+  };
   
   return (
     <MobileLayout title="Services">
@@ -65,7 +73,7 @@ const Services = () => {
                         <div className="flex justify-between items-start">
                           <div>
                             <p className="font-medium">Devis #{quote.id.substring(0, 5)}</p>
-                            <p className="text-sm text-gray-600">{quote.vehicle.name}</p>
+                            <p className="text-sm text-gray-600">{getVehicleInfo(quote.vehicleId)}</p>
                             <p className="text-sm text-gray-600">{quote.services.length} services</p>
                             <div className="mt-1">
                               <span className="inline-flex items-center px-2 py-1 rounded-full text-xs font-medium bg-amber-100 text-amber-800">
@@ -103,7 +111,7 @@ const Services = () => {
                         <div className="flex justify-between items-start">
                           <div>
                             <p className="font-medium">Devis #{quote.id.substring(0, 5)}</p>
-                            <p className="text-sm text-gray-600">{quote.vehicle.name}</p>
+                            <p className="text-sm text-gray-600">{getVehicleInfo(quote.vehicleId)}</p>
                             <p className="text-sm text-gray-600">{quote.createdAt}</p>
                             <div className="mt-1">
                               {quote.status === 'approved' ? (
@@ -148,12 +156,13 @@ const Services = () => {
                       <p className="font-medium">{service.name}</p>
                       <div className="flex items-center text-sm text-gray-600">
                         <Calendar className="h-4 w-4 mr-1" />
-                        {service.createdAt}
+                        {/* Display a placeholder date since services don't have createdAt */}
+                        {new Date().toISOString().split('T')[0]}
                       </div>
-                      <p className="text-sm text-gray-600">Véhicule: {service.vehicle.name}</p>
+                      <p className="text-sm text-gray-600">Catégorie: {service.category}</p>
                     </div>
                     <div>
-                      <span className="font-medium">{service.price} €</span>
+                      <span className="font-medium">{service.price ? `${service.price} €` : 'Prix sur demande'}</span>
                     </div>
                   </div>
                 </CardContent>
