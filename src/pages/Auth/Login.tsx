@@ -40,29 +40,29 @@ const Login = () => {
     <div className="min-h-screen flex items-center justify-center bg-taxi-gray p-4">
       <div className="w-full max-w-md">
         <div className="text-center mb-8">
-          <div className="bg-taxi-yellow p-4 rounded-full w-20 h-20 flex items-center justify-center mx-auto">
-            <Car size={40} className="text-taxi-dark" />
+          <div className="bg-amber-100 p-4 rounded-full w-20 h-20 flex items-center justify-center mx-auto">
+            <Car size={40} className="text-gray-800" />
           </div>
-          <h1 className="text-2xl font-bold mt-4 text-taxi-blue">Centre du Taxi</h1>
-          <p className="text-gray-500">Portail des propriétaires et conducteurs</p>
+          <h1 className="text-2xl font-bold mt-4 text-gray-800">Laundry Heap</h1>
+          <p className="text-gray-500">Professional Laundry Services</p>
         </div>
         
         <Card>
           <CardHeader>
-            <CardTitle>Connexion</CardTitle>
+            <CardTitle>Login</CardTitle>
             <CardDescription>
-              Connectez-vous à votre compte Centre du Taxi
+              Login to your Laundry Heap account
             </CardDescription>
           </CardHeader>
           <CardContent>
             <form onSubmit={handleSubmit}>
               <div className="space-y-4">
                 <div className="space-y-2">
-                  <Label htmlFor="email">Courriel</Label>
+                  <Label htmlFor="email">Email</Label>
                   <Input
                     id="email"
                     type="email"
-                    placeholder="nom@exemple.com"
+                    placeholder="name@example.com"
                     value={email}
                     onChange={(e) => setEmail(e.target.value)}
                     required
@@ -70,12 +70,12 @@ const Login = () => {
                 </div>
                 <div className="space-y-2">
                   <div className="flex items-center justify-between">
-                    <Label htmlFor="password">Mot de passe</Label>
+                    <Label htmlFor="password">Password</Label>
                     <Link
                       to="/forgot-password"
-                      className="text-sm text-taxi-blue hover:underline"
+                      className="text-sm text-amber-600 hover:underline"
                     >
-                      Mot de passe oublié?
+                      Forgot password?
                     </Link>
                   </div>
                   <Input
@@ -87,17 +87,17 @@ const Login = () => {
                     required
                   />
                 </div>
-                <Button className="w-full bg-taxi-blue hover:bg-taxi-blue/90" type="submit" disabled={isLoading}>
-                  {isLoading ? "Connexion en cours..." : "Se connecter"}
+                <Button className="w-full bg-amber-500 hover:bg-amber-600 text-white" type="submit" disabled={isLoading}>
+                  {isLoading ? "Logging in..." : "Login"}
                 </Button>
               </div>
             </form>
           </CardContent>
           <CardFooter className="flex flex-col space-y-4">
             <div className="text-center text-sm text-gray-600">
-              Vous n'avez pas de compte?{' '}
-              <Link to="/register" className="text-taxi-blue hover:underline font-medium">
-                Créer un compte
+              Don't have an account?{' '}
+              <Link to="/register" className="text-amber-600 hover:underline font-medium">
+                Create an account
               </Link>
             </div>
           </CardFooter>
