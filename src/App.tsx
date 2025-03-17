@@ -1,10 +1,11 @@
+
 import React from 'react';
 import { BrowserRouter as Router, Route, Routes } from 'react-router-dom';
 import MobileLayout from './components/layout/MobileLayout';
 import BottomNavbar from './components/layout/BottomNavbar';
-import Home from './pages/Home/Home';
-import Vehicles from './pages/Vehicles/Vehicles';
-import History from './pages/History/History';
+import Home from './pages/Home';
+import Vehicles from './pages/Vehicles/VehiclesList';
+import History from './pages/History/HistoryList';
 import Services from './pages/Services/Services';
 import Profile from './pages/Profile/Profile';
 import ServicesList from './pages/Services/ServicesList';
@@ -13,6 +14,7 @@ import { ServiceProvider } from './contexts/ServiceContext';
 import RequestQuote from './pages/Services/RequestQuote';
 import FinancesPage from './pages/Finances/FinancesPage';
 import QuoteDetails from './pages/Services/QuoteDetails';
+import NotFound from './pages/NotFound';
 import { Toaster } from 'sonner';
 
 function App() {
@@ -32,6 +34,7 @@ function App() {
             <Route path="/services/quotes/:id" element={<QuoteDetails />} />
             <Route path="/finances" element={<FinancesPage />} />
             <Route path="/profile" element={<Profile />} />
+            <Route path="*" element={<NotFound />} />
           </Routes>
         </MobileLayout>
         <BottomNavbar />
