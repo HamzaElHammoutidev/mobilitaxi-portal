@@ -66,7 +66,7 @@ export const ServiceProvider: React.FC<ServiceProviderProps> = ({ children }) =>
           description: 'Inspection complète requise pour la certification annuelle',
           category: 'Inspection',
           estimatedDuration: 90,
-          estimatedTime: '1h 30min', // Added the missing property
+          estimatedTime: '1h 30min',
           price: 149.99
         },
         {
@@ -75,7 +75,7 @@ export const ServiceProvider: React.FC<ServiceProviderProps> = ({ children }) =>
           description: 'Service complet avec huile synthétique',
           category: 'Maintenance',
           estimatedDuration: 45,
-          estimatedTime: '45min', // Added the missing property
+          estimatedTime: '45min',
           price: 69.99
         },
         {
@@ -84,7 +84,7 @@ export const ServiceProvider: React.FC<ServiceProviderProps> = ({ children }) =>
           description: 'Diagnostique et réparation du taximètre',
           category: 'Repair',
           estimatedDuration: 120,
-          estimatedTime: '2h', // Added the missing property
+          estimatedTime: '2h',
         },
         {
           id: 's4',
@@ -126,6 +126,7 @@ export const ServiceProvider: React.FC<ServiceProviderProps> = ({ children }) =>
               description: 'Inspection complète requise pour la certification annuelle',
               category: 'Inspection',
               estimatedDuration: 90,
+              estimatedTime: '1h 30min',
               price: 149.99
             },
             {
@@ -134,6 +135,7 @@ export const ServiceProvider: React.FC<ServiceProviderProps> = ({ children }) =>
               description: 'Service complet avec huile synthétique',
               category: 'Maintenance',
               estimatedDuration: 45,
+              estimatedTime: '45min',
               price: 69.99
             }
           ],
@@ -152,7 +154,8 @@ export const ServiceProvider: React.FC<ServiceProviderProps> = ({ children }) =>
               name: 'Réparation du taximètre',
               description: 'Diagnostique et réparation du taximètre',
               category: 'Repair',
-              estimatedDuration: 120
+              estimatedDuration: 120,
+              estimatedTime: '2h'
             }
           ],
           vehicleId: 'v2',
