@@ -9,6 +9,7 @@ import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar';
 import { Separator } from '@/components/ui/separator';
 import { useAuth } from '@/contexts/AuthContext';
 import { toast } from 'sonner';
+import BottomNavbar from './BottomNavbar';
 
 interface MobileLayoutProps {
   children: React.ReactNode;
@@ -159,73 +160,8 @@ const MobileLayout: React.FC<MobileLayoutProps> = ({
         {children}
       </main>
       
-      {/* Bottom navigation */}
-      <nav className="bottom-nav">
-        <Link to="/" className={cn(
-          "flex flex-col items-center text-sm",
-          location.pathname === '/' ? "text-taxi-yellow font-medium" : "text-gray-500"
-        )}>
-          <div className={cn(
-            "p-2 rounded-full",
-            location.pathname === '/' ? "bg-taxi-yellow/20" : ""
-          )}>
-            <Home size={20} className={location.pathname === '/' ? "text-taxi-yellow" : ""} />
-          </div>
-          <span>Accueil</span>
-        </Link>
-        
-        <Link to="/vehicles" className={cn(
-          "flex flex-col items-center text-sm",
-          location.pathname.includes('/vehicles') ? "text-taxi-yellow font-medium" : "text-gray-500"
-        )}>
-          <div className={cn(
-            "p-2 rounded-full",
-            location.pathname.includes('/vehicles') ? "bg-taxi-yellow/20" : ""
-          )}>
-            <Car size={20} className={location.pathname.includes('/vehicles') ? "text-taxi-yellow" : ""} />
-          </div>
-          <span>Véhicules</span>
-        </Link>
-        
-        <Link to="/appointments" className={cn(
-          "flex flex-col items-center text-sm",
-          location.pathname.includes('/appointments') ? "text-taxi-yellow font-medium" : "text-gray-500"
-        )}>
-          <div className={cn(
-            "p-2 rounded-full",
-            location.pathname.includes('/appointments') ? "bg-taxi-yellow/20" : ""
-          )}>
-            <Calendar size={20} className={location.pathname.includes('/appointments') ? "text-taxi-yellow" : ""} />
-          </div>
-          <span>Rendez-vous</span>
-        </Link>
-        
-        <Link to="/services" className={cn(
-          "flex flex-col items-center text-sm",
-          location.pathname.includes('/services') ? "text-taxi-yellow font-medium" : "text-gray-500"
-        )}>
-          <div className={cn(
-            "p-2 rounded-full",
-            location.pathname.includes('/services') ? "bg-taxi-yellow/20" : ""
-          )}>
-            <FileText size={20} className={location.pathname.includes('/services') ? "text-taxi-yellow" : ""} />
-          </div>
-          <span>Services</span>
-        </Link>
-        
-        <Link to="/profile" className={cn(
-          "flex flex-col items-center text-sm",
-          location.pathname.includes('/profile') ? "text-taxi-yellow font-medium" : "text-gray-500"
-        )}>
-          <div className={cn(
-            "p-2 rounded-full",
-            location.pathname.includes('/profile') ? "bg-taxi-yellow/20" : ""
-          )}>
-            <User size={20} className={location.pathname.includes('/profile') ? "text-taxi-yellow" : ""} />
-          </div>
-          <span>Profil</span>
-        </Link>
-      </nav>
+      {/* Using the unified BottomNavbar component */}
+      <BottomNavbar />
     </div>
   );
 };
