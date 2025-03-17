@@ -1,7 +1,7 @@
 
 import React, { useState } from 'react';
 import { Link, useLocation, useNavigate } from 'react-router-dom';
-import { Home, Calendar, Car, FileText, MapPin, Menu, Settings, X, User, LogOut, HelpCircle } from 'lucide-react';
+import { Home, Calendar, Car, FileText, MapPin, Menu, Settings, X, User, LogOut, HelpCircle, Wallet } from 'lucide-react';
 import { cn } from '@/lib/utils';
 import { Button } from '@/components/ui/button';
 import { Sheet, SheetContent, SheetHeader, SheetTitle, SheetClose } from '@/components/ui/sheet';
@@ -10,6 +10,7 @@ import { Separator } from '@/components/ui/separator';
 import { useAuth } from '@/contexts/AuthContext';
 import { toast } from 'sonner';
 import BottomNavbar from './BottomNavbar';
+import { NavigationMenu, NavigationMenuContent, NavigationMenuItem, NavigationMenuLink, NavigationMenuList, NavigationMenuTrigger, navigationMenuTriggerStyle } from '@/components/ui/navigation-menu';
 
 interface MobileLayoutProps {
   children: React.ReactNode;
@@ -51,6 +52,7 @@ const MobileLayout: React.FC<MobileLayoutProps> = ({
   // Top menu items that will be shown in the sidebar
   const menuItems = [
     { title: 'Centres', icon: MapPin, path: '/locations' },
+    { title: 'Finances', icon: Wallet, path: '/finances' },
     { title: 'Paramètres', icon: Settings, path: '/settings' },
     { title: 'Aide & Support', icon: HelpCircle, path: '/help' },
   ];
@@ -77,14 +79,33 @@ const MobileLayout: React.FC<MobileLayoutProps> = ({
           </h1>
         </div>
         
-        <Button 
-          variant="ghost" 
-          size="icon" 
-          className="text-gray-800"
-          onClick={() => setSidebarOpen(true)}
-        >
-          <Menu className="h-6 w-6" />
-        </Button>
+        <div className="flex items-center gap-2">
+          {/* Top Navigation Menu */}
+          <NavigationMenu className="hidden md:flex">
+            <NavigationMenuList>
+              <NavigationMenuItem>
+                <Link to="/finances" className={cn(
+                  "flex items-center px-3 py-2 text-sm font-medium rounded-md",
+                  location.pathname === "/finances" 
+                    ? "bg-taxi-yellow/10 text-taxi-yellow" 
+                    : "text-gray-700 hover:bg-gray-100"
+                )}>
+                  <Wallet className="mr-2 h-4 w-4" />
+                  Finances
+                </Link>
+              </NavigationMenuItem>
+            </NavigationMenuList>
+          </NavigationMenu>
+          
+          <Button 
+            variant="ghost" 
+            size="icon" 
+            className="text-gray-800"
+            onClick={() => setSidebarOpen(true)}
+          >
+            <Menu className="h-6 w-6" />
+          </Button>
+        </div>
       </header>
       
       {/* Sidebar */}
