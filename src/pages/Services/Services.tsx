@@ -1,27 +1,23 @@
 
 import React from 'react';
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import { FileText, Clock } from 'lucide-react';
 import { Card, CardContent } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
 import { useServices } from '@/contexts/ServiceContext';
 import BottomNavbar from '@/components/layout/BottomNavbar';
+import MobileLayout from '@/components/layout/MobileLayout';
 
 const Services = () => {
   const { services } = useServices();
+  const navigate = useNavigate();
+  
+  const handleRequestQuote = () => {
+    navigate('/services/quotes');
+  };
   
   return (
-    <div className="flex flex-col min-h-screen bg-gray-50">
-      {/* Header */}
-      <header className="bg-white p-4 flex items-center justify-between shadow-sm">
-        <h1 className="text-xl font-bold text-gray-800">Services</h1>
-        <button className="text-gray-800">
-          <svg xmlns="http://www.w3.org/2000/svg" className="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M4 6h16M4 12h16M4 18h16" />
-          </svg>
-        </button>
-      </header>
-      
+    <MobileLayout title="Services">
       <div className="p-4 pb-20">
         {/* Services Banner */}
         <div className="bg-[#FFD500] rounded-3xl p-6 mb-6 text-center shadow-md">
@@ -82,11 +78,20 @@ const Services = () => {
             <p className="text-gray-500">Aucun service récent</p>
           </div>
         )}
+        
+        <div className="mt-6">
+          <Button 
+            className="w-full bg-taxi-blue hover:bg-taxi-blue/90"
+            onClick={handleRequestQuote}
+          >
+            Demander un devis
+          </Button>
+        </div>
       </div>
       
       {/* Bottom Navigation */}
       <BottomNavbar />
-    </div>
+    </MobileLayout>
   );
 };
 

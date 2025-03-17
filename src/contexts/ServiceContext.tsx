@@ -84,7 +84,8 @@ export const ServiceProvider: React.FC<ServiceProviderProps> = ({ children }) =>
           description: 'Diagnostique et réparation du taximètre',
           category: 'Repair',
           estimatedDuration: 120,
-          estimatedTime: '2h'
+          estimatedTime: '2h',
+          price: 0 // Added a default price even if it's 0
         },
         {
           id: 's4',
@@ -115,7 +116,7 @@ export const ServiceProvider: React.FC<ServiceProviderProps> = ({ children }) =>
     if (storedQuotes) {
       setQuotes(JSON.parse(storedQuotes));
     } else {
-      // Mock quote data
+      // Mock quote data with all required fields
       const mockQuotes: Quote[] = [
         {
           id: 'q1',
@@ -126,7 +127,7 @@ export const ServiceProvider: React.FC<ServiceProviderProps> = ({ children }) =>
               description: 'Inspection complète requise pour la certification annuelle',
               category: 'Inspection',
               estimatedDuration: 90,
-              estimatedTime: '1h 30min',  // Added the missing estimatedTime property
+              estimatedTime: '1h 30min',
               price: 149.99
             },
             {
@@ -135,7 +136,7 @@ export const ServiceProvider: React.FC<ServiceProviderProps> = ({ children }) =>
               description: 'Service complet avec huile synthétique',
               category: 'Maintenance',
               estimatedDuration: 45,
-              estimatedTime: '45min',  // Added the missing estimatedTime property
+              estimatedTime: '45min',
               price: 69.99
             }
           ],
@@ -155,12 +156,13 @@ export const ServiceProvider: React.FC<ServiceProviderProps> = ({ children }) =>
               description: 'Diagnostique et réparation du taximètre',
               category: 'Repair',
               estimatedDuration: 120,
-              estimatedTime: '2h',  // Added the missing estimatedTime property
+              estimatedTime: '2h',
+              price: 0 // Added a default price
             }
           ],
           vehicleId: 'v2',
           status: 'pending',
-          total: 0, // Price to be determined after inspection
+          total: 0,
           createdAt: '2023-11-01',
           validUntil: '2023-12-01'
         }

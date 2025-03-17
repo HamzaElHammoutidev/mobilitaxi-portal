@@ -1,6 +1,5 @@
-
 import React, { useState } from 'react';
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import { Card, CardContent } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
@@ -13,6 +12,7 @@ import { cn } from '@/lib/utils';
 const ServicesList = () => {
   const { services, quotes } = useServices();
   const [searchQuery, setSearchQuery] = useState('');
+  const navigate = useNavigate();
   
   // Filter services based on search query
   const filteredServices = services.filter(service => 
@@ -34,6 +34,10 @@ const ServicesList = () => {
   const pendingQuotes = quotes.filter(quote => quote.status === 'pending');
   const approvedQuotes = quotes.filter(quote => quote.status === 'approved');
   const rejectedQuotes = quotes.filter(quote => quote.status === 'rejected');
+
+  const handleRequestQuote = () => {
+    navigate('/services/quotes');
+  };
   
   return (
     <MobileLayout title="Services et Devis">
@@ -103,8 +107,11 @@ const ServicesList = () => {
             </div>
             
             <div className="mt-6">
-              <Button asChild className="w-full bg-taxi-blue hover:bg-taxi-blue/90">
-                <Link to="/services/request-quote">Demander un devis</Link>
+              <Button 
+                className="w-full bg-taxi-blue hover:bg-taxi-blue/90"
+                onClick={handleRequestQuote}
+              >
+                Demander un devis
               </Button>
             </div>
           </TabsContent>
@@ -226,8 +233,11 @@ const ServicesList = () => {
                 <div className="text-center py-8">
                   <FileText className="h-12 w-12 mx-auto mb-3 text-muted-foreground" />
                   <p className="text-muted-foreground mb-4">Aucun devis</p>
-                  <Button asChild className="bg-taxi-blue hover:bg-taxi-blue/90">
-                    <Link to="/services/request-quote">Demander un devis</Link>
+                  <Button 
+                    className="bg-taxi-blue hover:bg-taxi-blue/90"
+                    onClick={handleRequestQuote}
+                  >
+                    Demander un devis
                   </Button>
                 </div>
               )}

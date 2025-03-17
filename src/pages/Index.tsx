@@ -7,6 +7,7 @@ import { Card, CardContent } from '@/components/ui/card';
 import { useAuth } from '@/contexts/AuthContext';
 import { useAppointments } from '@/contexts/AppointmentContext';
 import MobileLayout from '@/components/layout/MobileLayout';
+import BottomNavbar from '@/components/layout/BottomNavbar';
 
 const Index = () => {
   const navigate = useNavigate();
@@ -28,7 +29,7 @@ const Index = () => {
   
   return (
     <MobileLayout title="Centre du Taxi">
-      <div className="flex flex-col min-h-screen bg-gray-50">
+      <div className="flex flex-col bg-gray-50 pb-16">
         {/* Hero Section */}
         <div className="p-4">
           <div className="bg-[#FFD500] rounded-3xl p-8 mb-6 text-center shadow-md">
@@ -139,6 +140,9 @@ const Index = () => {
           </div>
         </div>
       </div>
+      
+      {/* Bottom Navigation */}
+      <BottomNavbar />
     </MobileLayout>
   );
 };
