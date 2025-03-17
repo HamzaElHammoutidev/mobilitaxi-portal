@@ -85,7 +85,7 @@ const Index = () => {
               <p className="text-lg mb-4">Vous avez {activeAppointmentsCount} dossiers en cours.</p>
               <Button 
                 className="bg-[#FFD500] hover:bg-yellow-400 text-gray-800 font-semibold px-6 py-2"
-                onClick={() => navigate('/appointments')}
+                onClick={() => navigate('/documents')}
               >
                 Voir les détails
               </Button>
