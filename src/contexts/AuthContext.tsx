@@ -6,6 +6,7 @@ export interface User {
   id: string;
   name: string;
   email: string;
+  phone: string; // Added the phone property
   role: 'owner' | 'driver';
   status: 'pending' | 'validated';
   vehicleIds: string[];
@@ -58,6 +59,7 @@ export const AuthProvider: React.FC<AuthProviderProps> = ({ children }) => {
         id: '123',
         name: 'Jean Dupont',
         email,
+        phone: '+33 6 12 34 56 78', // Add the phone field
         role: email.includes('owner') ? 'owner' : 'driver',
         status: 'pending',
         vehicleIds: ['v1', 'v2']
@@ -91,6 +93,7 @@ export const AuthProvider: React.FC<AuthProviderProps> = ({ children }) => {
         id: '123',
         name,
         email,
+        phone: '', // Add empty phone field for new users
         role,
         status: 'pending',
         vehicleIds: []

@@ -1,7 +1,7 @@
 
 import React from 'react';
 import { useParams, useNavigate } from 'react-router-dom';
-import { Clock, Calendar, Car, Tool, FileText, AlertCircle } from 'lucide-react';
+import { Clock, Calendar, Car, Wrench, FileText, AlertCircle } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { Card, CardContent } from '@/components/ui/card';
 import { Separator } from '@/components/ui/separator';
@@ -36,7 +36,7 @@ const ServiceDetails = () => {
       id: `quote-${Date.now()}`,
       services: [service],
       status: 'pending',
-      total: service.price,
+      total: service.price || 0,
       createdAt: new Date().toLocaleDateString()
     });
     
@@ -47,15 +47,15 @@ const ServiceDetails = () => {
   const getServiceIcon = () => {
     switch (service.category) {
       case "Maintenance":
-        return <Tool className="h-6 w-6" />;
+        return <Wrench className="h-6 w-6" />;
       case "Inspection":
         return <Car className="h-6 w-6" />;
       case "Repair":
-        return <Tool className="h-6 w-6" />;
+        return <Wrench className="h-6 w-6" />;
       case "Certification":
         return <FileText className="h-6 w-6" />;
       default:
-        return <Tool className="h-6 w-6" />;
+        return <Wrench className="h-6 w-6" />;
     }
   };
   

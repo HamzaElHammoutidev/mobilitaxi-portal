@@ -8,17 +8,18 @@ export interface Service {
   description: string;
   category: 'Inspection' | 'Maintenance' | 'Repair' | 'Certification';
   estimatedDuration: number; // in minutes
+  estimatedTime: string; // Added this field for displaying human-readable time
   price?: number;
 }
 
 export interface Quote {
   id: string;
   services: Service[];
-  vehicleId: string;
+  vehicleId?: string; // Made optional to match usage
   status: 'pending' | 'approved' | 'rejected';
   total: number;
   createdAt: string;
-  validUntil: string;
+  validUntil?: string; // Made optional to match usage
   qrCode?: string;
 }
 
@@ -29,6 +30,7 @@ interface ServiceContextType {
   getServiceById: (id: string) => Service | undefined;
   getQuoteById: (id: string) => Quote | undefined;
   requestQuote: (vehicleId: string, serviceIds: string[]) => Promise<void>;
+  addQuote: (quote: Quote) => void; // Added this method
 }
 
 const ServiceContext = createContext<ServiceContextType | undefined>(undefined);
@@ -64,6 +66,7 @@ export const ServiceProvider: React.FC<ServiceProviderProps> = ({ children }) =>
           description: 'Inspection complète requise pour la certification annuelle',
           category: 'Inspection',
           estimatedDuration: 90,
+          estimatedTime: '1h 30min', // Added this field
           price: 149.99
         },
         {
@@ -72,6 +75,7 @@ export const ServiceProvider: React.FC<ServiceProviderProps> = ({ children }) =>
           description: 'Service complet avec huile synthétique',
           category: 'Maintenance',
           estimatedDuration: 45,
+          estimatedTime: '45min', // Added this field
           price: 69.99
         },
         {
@@ -79,7 +83,8 @@ export const ServiceProvider: React.FC<ServiceProviderProps> = ({ children }) =>
           name: 'Réparation du taximètre',
           description: 'Diagnostique et réparation du taximètre',
           category: 'Repair',
-          estimatedDuration: 120
+          estimatedDuration: 120,
+          estimatedTime: '2h', // Added this field
         },
         {
           id: 's4',
@@ -87,6 +92,7 @@ export const ServiceProvider: React.FC<ServiceProviderProps> = ({ children }) =>
           description: 'Service de calibration précise des compteurs',
           category: 'Maintenance',
           estimatedDuration: 60,
+          estimatedTime: '1h', // Added this field
           price: 89.99
         },
         {
@@ -95,6 +101,7 @@ export const ServiceProvider: React.FC<ServiceProviderProps> = ({ children }) =>
           description: 'Inspection et certification pour taxis adaptés',
           category: 'Certification',
           estimatedDuration: 180,
+          estimatedTime: '3h', // Added this field
           price: 299.99
         },
       ];
@@ -171,6 +178,13 @@ export const ServiceProvider: React.FC<ServiceProviderProps> = ({ children }) =>
     return quotes.find(q => q.id === id);
   };
 
+  // Add the missing addQuote method
+  const addQuote = (quote: Quote) => {
+    const updatedQuotes = [...quotes, quote];
+    setQuotes(updatedQuotes);
+    localStorage.setItem('taxiQuotes', JSON.stringify(updatedQuotes));
+  };
+
   const requestQuote = async (vehicleId: string, serviceIds: string[]) => {
     try {
       setLoading(true);
@@ -218,7 +232,8 @@ export const ServiceProvider: React.FC<ServiceProviderProps> = ({ children }) =>
         loading,
         getServiceById,
         getQuoteById,
-        requestQuote
+        requestQuote,
+        addQuote // Added this method to the context
       }}
     >
       {children}
