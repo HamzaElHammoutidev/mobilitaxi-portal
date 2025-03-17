@@ -99,15 +99,15 @@
 }
 
 .text-taxi-yellow {
-  @apply text-[#E0C13E];
+  @apply text-[#FFD500];
 }
 
 .bg-taxi-yellow {
-  @apply bg-[#E0C13E];
+  @apply bg-[#FFD500];
 }
 
 .border-taxi-yellow {
-  @apply border-[#E0C13E];
+  @apply border-[#FFD500];
 }
 
 .text-taxi-blue {
@@ -138,44 +138,22 @@
   @apply max-w-lg mx-auto;
 }
 
-.clean-header {
-  @apply bg-white rounded-lg shadow-sm py-3 px-4 flex items-center space-x-3;
-}
-
 .subtle-icon {
   @apply text-gray-500 p-1.5 rounded-md bg-gray-50;
 }
 
-/* New styles for the cleaner taxi theme */
+/* New styles for the clean modern taxi theme */
 .app-container {
-  @apply bg-gray-50;
+  @apply bg-gray-50 min-h-screen;
 }
 
 .yellow-hero {
   @apply bg-[#FFD500] rounded-3xl p-6 text-center shadow-md;
 }
 
-.icon-tile {
-  @apply bg-[#FFD500] p-3 rounded-lg shadow-md transform hover:scale-105 transition-transform;
-}
-
+/* Modern UI elements */
 .feature-card {
   @apply bg-white rounded-xl p-5 shadow-sm flex flex-col items-center hover:shadow-md transition-shadow;
-}
-
-.icon-3d {
-  @apply relative;
-  transform-style: preserve-3d;
-  transform: perspective(500px) rotateX(10deg);
-  transition: transform 0.3s ease;
-}
-
-.icon-3d:hover {
-  transform: perspective(500px) rotateX(0deg) scale(1.05);
-}
-
-.icon-shadow {
-  filter: drop-shadow(2px 4px 6px rgba(0, 0, 0, 0.1));
 }
 
 @keyframes fadeIn {
@@ -183,17 +161,8 @@
   to { opacity: 1; transform: translateY(0); }
 }
 
-@keyframes scaleIn {
-  from { transform: scale(0.95); opacity: 0; }
-  to { transform: scale(1); opacity: 1; }
-}
-
 .animate-fade-in {
   animation: fadeIn 0.3s ease-out;
-}
-
-.animate-scale-in {
-  animation: scaleIn 0.2s ease-out;
 }
 
 .hover-scale {
@@ -204,4 +173,25 @@
   html {
     font-size: 14px;
   }
+}
+
+/* New modern components */
+.avatar-welcome {
+  @apply flex items-center gap-3;
+}
+
+.service-pill {
+  @apply bg-white rounded-full py-2 px-4 shadow-sm hover:shadow transition;
+}
+
+.service-card {
+  @apply bg-white rounded-xl p-4 shadow-sm hover:shadow-md transition-all;
+}
+
+.hero-dot {
+  @apply h-2 w-2 rounded-full bg-orange-500;
+}
+
+.hero-feature {
+  @apply flex items-center gap-2 text-sm;
 }
