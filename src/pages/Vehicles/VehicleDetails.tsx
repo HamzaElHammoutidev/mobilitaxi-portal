@@ -130,20 +130,20 @@ const VehicleDetails = () => {
         </Card>
         
         <div className="grid grid-cols-2 gap-4 mb-6">
-          <Card className="hover:bg-muted/50 transition-colors">
-            <CardContent className="p-4 flex flex-col items-center text-center" asChild>
-              <Link to="/services">
+          <Card>
+            <CardContent className="p-4 flex flex-col items-center text-center">
+              <Link to="/services" className="flex flex-col items-center">
                 <Wrench className="h-10 w-10 mb-2 text-taxi-blue" />
                 <span className="font-medium">Services</span>
               </Link>
             </CardContent>
           </Card>
           
-          <Card className="hover:bg-muted/50 transition-colors">
-            <CardContent className="p-4 flex flex-col items-center text-center" asChild>
-              <Link to="/services/request-quote">
+          <Card>
+            <CardContent className="p-4 flex flex-col items-center text-center">
+              <Link to="/documents/scan" className="flex flex-col items-center">
                 <FileText className="h-10 w-10 mb-2 text-taxi-blue" />
-                <span className="font-medium">Devis</span>
+                <span className="font-medium">Scan documents</span>
               </Link>
             </CardContent>
           </Card>
