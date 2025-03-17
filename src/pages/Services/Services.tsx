@@ -1,7 +1,7 @@
 
 import React from 'react';
 import { Link } from 'react-router-dom';
-import { Car, Tool, Clock, FileText, Calendar, CheckCircle, XCircle } from 'lucide-react';
+import { Car, Wrench, Clock, FileText, Calendar, CheckCircle, XCircle } from 'lucide-react';
 import { Card, CardContent } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
@@ -13,7 +13,7 @@ const Services = () => {
   
   // Filter quotes
   const pendingQuotes = quotes.filter(quote => quote.status === 'pending');
-  const completedQuotes = quotes.filter(quote => quote.status === 'completed' || quote.status === 'rejected');
+  const completedQuotes = quotes.filter(quote => quote.status === 'approved' || quote.status === 'rejected');
   
   return (
     <MobileLayout title="Services">
@@ -39,7 +39,7 @@ const Services = () => {
                 </Button>
               </div>
               <div className="bg-taxi-yellow rounded-full p-3">
-                <Tool className="h-6 w-6 text-taxi-dark" />
+                <Wrench className="h-6 w-6 text-taxi-dark" />
               </div>
             </div>
           </CardContent>
@@ -65,7 +65,7 @@ const Services = () => {
                         <div className="flex justify-between items-start">
                           <div>
                             <p className="font-medium">Devis #{quote.id.substring(0, 5)}</p>
-                            <p className="text-sm text-gray-600">{quote.vehicleName}</p>
+                            <p className="text-sm text-gray-600">{quote.vehicle.name}</p>
                             <p className="text-sm text-gray-600">{quote.services.length} services</p>
                             <div className="mt-1">
                               <span className="inline-flex items-center px-2 py-1 rounded-full text-xs font-medium bg-amber-100 text-amber-800">
@@ -103,10 +103,10 @@ const Services = () => {
                         <div className="flex justify-between items-start">
                           <div>
                             <p className="font-medium">Devis #{quote.id.substring(0, 5)}</p>
-                            <p className="text-sm text-gray-600">{quote.vehicleName}</p>
+                            <p className="text-sm text-gray-600">{quote.vehicle.name}</p>
                             <p className="text-sm text-gray-600">{quote.createdAt}</p>
                             <div className="mt-1">
-                              {quote.status === 'completed' ? (
+                              {quote.status === 'approved' ? (
                                 <span className="inline-flex items-center px-2 py-1 rounded-full text-xs font-medium bg-green-100 text-green-800">
                                   <CheckCircle size={12} className="mr-1" />
                                   Accepté
@@ -148,9 +148,9 @@ const Services = () => {
                       <p className="font-medium">{service.name}</p>
                       <div className="flex items-center text-sm text-gray-600">
                         <Calendar className="h-4 w-4 mr-1" />
-                        {service.date}
+                        {service.createdAt}
                       </div>
-                      <p className="text-sm text-gray-600">Véhicule: {service.vehicleName}</p>
+                      <p className="text-sm text-gray-600">Véhicule: {service.vehicle.name}</p>
                     </div>
                     <div>
                       <span className="font-medium">{service.price} €</span>
