@@ -1,7 +1,7 @@
 
 import React, { useState, useRef } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { Camera, Upload, File, X, Check } from 'lucide-react';
+import { Camera, Upload, File, X, Check, Folder } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { Card, CardContent } from '@/components/ui/card';
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
@@ -14,9 +14,10 @@ import { useVehicles } from '@/contexts/VehicleContext';
 
 const DocumentScan = () => {
   const navigate = useNavigate();
-  const { vehicles, uploadDocument } = useVehicles();
+  const { vehicles, folders, uploadDocument } = useVehicles();
   const [selectedVehicle, setSelectedVehicle] = useState('');
   const [documentType, setDocumentType] = useState('Registration');
+  const [selectedFolder, setSelectedFolder] = useState('');
   const [isUploading, setIsUploading] = useState(false);
   const [file, setFile] = useState<File | null>(null);
   const [previewUrl, setPreviewUrl] = useState<string | null>(null);
@@ -69,7 +70,7 @@ const DocumentScan = () => {
     setIsUploading(true);
     
     try {
-      await uploadDocument(selectedVehicle, documentType, file);
+      await uploadDocument(selectedVehicle, documentType, file, selectedFolder || undefined);
       toast.success('Document téléchargé avec succès');
       setTimeout(() => {
         navigate(`/vehicles/${selectedVehicle}`);
@@ -124,6 +125,27 @@ const DocumentScan = () => {
                   {documentTypes.map(type => (
                     <SelectItem key={type} value={type}>
                       {type}
+                    </SelectItem>
+                  ))}
+                </SelectContent>
+              </Select>
+            </CardContent>
+          </Card>
+          
+          <Card>
+            <CardContent className="p-4">
+              <Label htmlFor="folder" className="text-base font-medium block mb-2">
+                Dossier (optionnel)
+              </Label>
+              <Select value={selectedFolder} onValueChange={setSelectedFolder}>
+                <SelectTrigger>
+                  <SelectValue placeholder="Sélectionnez un dossier" />
+                </SelectTrigger>
+                <SelectContent>
+                  <SelectItem value="">Aucun dossier</SelectItem>
+                  {folders.map(folder => (
+                    <SelectItem key={folder.id} value={folder.id}>
+                      {folder.name}
                     </SelectItem>
                   ))}
                 </SelectContent>

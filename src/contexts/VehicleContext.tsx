@@ -2,6 +2,22 @@
 import React, { createContext, useContext, useState, useEffect, ReactNode } from 'react';
 import { toast } from 'sonner';
 
+export interface Document {
+  id: string;
+  type: string;
+  url: string;
+  expiryDate?: string;
+  folderId?: string;
+  dateAdded: string;
+}
+
+export interface DocumentFolder {
+  id: string;
+  name: string;
+  icon?: string;
+  color?: string;
+}
+
 export interface Vehicle {
   id: string;
   make: string;
@@ -11,18 +27,18 @@ export interface Vehicle {
   status: 'active' | 'inactive' | 'pending';
   lastService: string;
   nextServiceDue: string;
-  documents: {
-    type: string;
-    url: string;
-    expiryDate?: string;
-  }[];
+  documents: Document[];
 }
 
 interface VehicleContextType {
   vehicles: Vehicle[];
+  folders: DocumentFolder[];
   loading: boolean;
   getVehicleById: (id: string) => Vehicle | undefined;
-  uploadDocument: (vehicleId: string, type: string, file: File) => Promise<void>;
+  uploadDocument: (vehicleId: string, type: string, file: File, folderId?: string) => Promise<void>;
+  addFolder: (name: string, icon?: string, color?: string) => Promise<void>;
+  updateFolder: (id: string, name: string, icon?: string, color?: string) => Promise<void>;
+  deleteFolder: (id: string) => Promise<void>;
 }
 
 const VehicleContext = createContext<VehicleContextType | undefined>(undefined);
@@ -41,11 +57,14 @@ interface VehicleProviderProps {
 
 export const VehicleProvider: React.FC<VehicleProviderProps> = ({ children }) => {
   const [vehicles, setVehicles] = useState<Vehicle[]>([]);
+  const [folders, setFolders] = useState<DocumentFolder[]>([]);
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
-    // Load vehicles from localStorage
+    // Load vehicles and folders from localStorage
     const storedVehicles = localStorage.getItem('taxiVehicles');
+    const storedFolders = localStorage.getItem('taxiDocumentFolders');
+    
     if (storedVehicles) {
       setVehicles(JSON.parse(storedVehicles));
     } else {
@@ -62,14 +81,18 @@ export const VehicleProvider: React.FC<VehicleProviderProps> = ({ children }) =>
           nextServiceDue: '2023-12-10',
           documents: [
             {
+              id: 'd1',
               type: 'Registration',
               url: '/registration.pdf',
-              expiryDate: '2024-06-30'
+              expiryDate: '2024-06-30',
+              dateAdded: '2023-06-30'
             },
             {
+              id: 'd2',
               type: 'Insurance',
               url: '/insurance.pdf',
-              expiryDate: '2024-01-15'
+              expiryDate: '2024-01-15',
+              dateAdded: '2023-01-15'
             }
           ]
         },
@@ -84,14 +107,18 @@ export const VehicleProvider: React.FC<VehicleProviderProps> = ({ children }) =>
           nextServiceDue: '2023-11-22',
           documents: [
             {
+              id: 'd3',
               type: 'Registration',
               url: '/registration2.pdf',
-              expiryDate: '2024-05-12'
+              expiryDate: '2024-05-12',
+              dateAdded: '2023-05-12'
             },
             {
+              id: 'd4',
               type: 'Insurance',
               url: '/insurance2.pdf',
-              expiryDate: '2024-02-28'
+              expiryDate: '2024-02-28',
+              dateAdded: '2023-02-28'
             }
           ]
         }
@@ -100,6 +127,22 @@ export const VehicleProvider: React.FC<VehicleProviderProps> = ({ children }) =>
       localStorage.setItem('taxiVehicles', JSON.stringify(mockVehicles));
       setVehicles(mockVehicles);
     }
+    
+    if (storedFolders) {
+      setFolders(JSON.parse(storedFolders));
+    } else {
+      // Default folders
+      const defaultFolders: DocumentFolder[] = [
+        { id: 'f1', name: 'Documents administratifs', icon: 'FileText', color: '#3498db' },
+        { id: 'f2', name: 'Assurances', icon: 'Shield', color: '#2ecc71' },
+        { id: 'f3', name: 'Contrôle technique', icon: 'CheckSquare', color: '#e74c3c' },
+        { id: 'f4', name: 'Entretien', icon: 'Tool', color: '#f39c12' }
+      ];
+      
+      localStorage.setItem('taxiDocumentFolders', JSON.stringify(defaultFolders));
+      setFolders(defaultFolders);
+    }
+    
     setLoading(false);
   }, []);
 
@@ -107,7 +150,7 @@ export const VehicleProvider: React.FC<VehicleProviderProps> = ({ children }) =>
     return vehicles.find(v => v.id === id);
   };
 
-  const uploadDocument = async (vehicleId: string, type: string, file: File) => {
+  const uploadDocument = async (vehicleId: string, type: string, file: File, folderId?: string) => {
     try {
       setLoading(true);
       
@@ -116,6 +159,7 @@ export const VehicleProvider: React.FC<VehicleProviderProps> = ({ children }) =>
       
       // Mock document URL (in a real app, this would be a URL from your file storage)
       const documentUrl = `/docs/${type.toLowerCase()}_${Date.now()}.pdf`;
+      const documentId = `d${Date.now()}`;
       
       // Update the vehicle with the new document
       const updatedVehicles = vehicles.map(vehicle => {
@@ -123,8 +167,11 @@ export const VehicleProvider: React.FC<VehicleProviderProps> = ({ children }) =>
           const updatedDocuments = [
             ...vehicle.documents.filter(doc => doc.type !== type),
             {
+              id: documentId,
               type,
               url: documentUrl,
+              folderId,
+              dateAdded: new Date().toISOString().split('T')[0],
               expiryDate: type === 'Registration' || type === 'Insurance' 
                 ? new Date(new Date().setFullYear(new Date().getFullYear() + 1)).toISOString().split('T')[0]
                 : undefined
@@ -151,14 +198,111 @@ export const VehicleProvider: React.FC<VehicleProviderProps> = ({ children }) =>
       setLoading(false);
     }
   };
+  
+  const addFolder = async (name: string, icon?: string, color?: string) => {
+    try {
+      setLoading(true);
+      
+      // Mock API call
+      await new Promise(resolve => setTimeout(resolve, 500));
+      
+      const newFolder: DocumentFolder = {
+        id: `f${Date.now()}`,
+        name,
+        icon,
+        color
+      };
+      
+      const updatedFolders = [...folders, newFolder];
+      setFolders(updatedFolders);
+      localStorage.setItem('taxiDocumentFolders', JSON.stringify(updatedFolders));
+      
+      toast.success(`Dossier "${name}" créé avec succès`);
+    } catch (error) {
+      toast.error('Échec de la création du dossier');
+      console.error(error);
+    } finally {
+      setLoading(false);
+    }
+  };
+  
+  const updateFolder = async (id: string, name: string, icon?: string, color?: string) => {
+    try {
+      setLoading(true);
+      
+      // Mock API call
+      await new Promise(resolve => setTimeout(resolve, 500));
+      
+      const updatedFolders = folders.map(folder => {
+        if (folder.id === id) {
+          return {
+            ...folder,
+            name,
+            icon,
+            color
+          };
+        }
+        return folder;
+      });
+      
+      setFolders(updatedFolders);
+      localStorage.setItem('taxiDocumentFolders', JSON.stringify(updatedFolders));
+      
+      toast.success(`Dossier "${name}" mis à jour avec succès`);
+    } catch (error) {
+      toast.error('Échec de la mise à jour du dossier');
+      console.error(error);
+    } finally {
+      setLoading(false);
+    }
+  };
+  
+  const deleteFolder = async (id: string) => {
+    try {
+      setLoading(true);
+      
+      // Mock API call
+      await new Promise(resolve => setTimeout(resolve, 500));
+      
+      const updatedFolders = folders.filter(folder => folder.id !== id);
+      setFolders(updatedFolders);
+      localStorage.setItem('taxiDocumentFolders', JSON.stringify(updatedFolders));
+      
+      // Update all documents that were in this folder to remove the folder reference
+      const updatedVehicles = vehicles.map(vehicle => {
+        const updatedDocuments = vehicle.documents.map(doc => {
+          if (doc.folderId === id) {
+            return { ...doc, folderId: undefined };
+          }
+          return doc;
+        });
+        
+        return { ...vehicle, documents: updatedDocuments };
+      });
+      
+      setVehicles(updatedVehicles);
+      localStorage.setItem('taxiVehicles', JSON.stringify(updatedVehicles));
+      
+      toast.success(`Dossier supprimé avec succès`);
+    } catch (error) {
+      toast.error('Échec de la suppression du dossier');
+      console.error(error);
+    } finally {
+      setLoading(false);
+    }
+  };
 
   return (
     <VehicleContext.Provider
       value={{
         vehicles,
+        folders,
         loading,
         getVehicleById,
-        uploadDocument
+        uploadDocument,
+        addFolder,
+        updateFolder,
+        deleteFolder
       }}
     >
       {children}
