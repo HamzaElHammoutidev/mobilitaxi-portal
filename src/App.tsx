@@ -1,4 +1,3 @@
-
 import { BrowserRouter as Router, Routes, Route, Navigate } from 'react-router-dom';
 import { Toaster } from '@/components/ui/sonner';
 import Index from '@/pages/Index';
@@ -18,6 +17,7 @@ import Services from '@/pages/Services/Services';
 import ServicesList from '@/pages/Services/ServicesList';
 import ServiceDetails from '@/pages/Services/ServiceDetails';
 import QuoteDetails from '@/pages/Services/QuoteDetails';
+import QuoteRequest from '@/pages/Services/QuoteRequest';
 
 // Finances
 import Finances from '@/pages/Finances/Finances';
@@ -83,6 +83,7 @@ function App() {
                   <Route path="/services" element={<Services />} />
                   <Route path="/services/list" element={<ServicesList />} />
                   <Route path="/services/:id" element={<ServiceDetails />} />
+                  <Route path="/services/quotes/request" element={<QuoteRequest />} />
                   
                   {/* Finances routes */}
                   <Route path="/finances" element={<Finances />} />

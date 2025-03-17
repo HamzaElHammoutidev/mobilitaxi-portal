@@ -13,7 +13,7 @@ const Services = () => {
   const navigate = useNavigate();
   
   const handleRequestQuote = () => {
-    navigate('/services/quotes');
+    navigate('/services/quotes/request');
   };
   
   return (

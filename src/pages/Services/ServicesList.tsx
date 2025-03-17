@@ -1,3 +1,4 @@
+
 import React, { useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import { Card, CardContent } from '@/components/ui/card';
@@ -36,7 +37,7 @@ const ServicesList = () => {
   const rejectedQuotes = quotes.filter(quote => quote.status === 'rejected');
 
   const handleRequestQuote = () => {
-    navigate('/services/quotes');
+    navigate('/services/quotes/request');
   };
   
   return (
