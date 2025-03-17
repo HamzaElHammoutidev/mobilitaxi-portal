@@ -1,4 +1,3 @@
-
 import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { User, Mail, LogOut, ChevronRight, Settings, FileText, Car, Calendar, CreditCard, HelpCircle, Lock } from 'lucide-react';
@@ -114,7 +113,7 @@ const Profile = () => {
             <ProfileLink icon={Car} label="Mes véhicules" to="/vehicles" />
             <ProfileLink icon={Calendar} label="Mes rendez-vous" to="/appointments" />
             <ProfileLink icon={FileText} label="Mes devis" to="/services/quotes" />
-            <ProfileLink icon={FileText} label="Mes factures" to="/documents/invoices" />
+            <ProfileLink icon={FileText} label="Mes factures" to="/invoices" />
           </div>
         </Card>
         

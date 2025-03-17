@@ -60,28 +60,28 @@ const Index = () => {
         
         {/* Icon navigation */}
         <div className="icon-group">
-          <div className="icon-item">
+          <div className="icon-item" onClick={() => navigate('/search')}>
             <div className="icon-container">
               <MapPin className="h-6 w-6 text-gray-800" />
             </div>
             <span className="icon-label">Géolocalisation</span>
           </div>
           
-          <div className="icon-item">
+          <div className="icon-item" onClick={() => navigate('/appointments')}>
             <div className="icon-container">
               <Calendar className="h-6 w-6 text-gray-800" />
             </div>
             <span className="icon-label">Rendez-vous</span>
           </div>
           
-          <div className="icon-item">
+          <div className="icon-item" onClick={() => navigate('/services/quotes')}>
             <div className="icon-container">
               <FileText className="h-6 w-6 text-gray-800" />
             </div>
             <span className="icon-label">Devis</span>
           </div>
           
-          <div className="icon-item">
+          <div className="icon-item" onClick={() => navigate('/history')}>
             <div className="icon-container">
               <AlertTriangle className="h-6 w-6 text-gray-800" />
             </div>
@@ -104,33 +104,33 @@ const Index = () => {
         
         {/* Feature grid */}
         <div className="feature-grid mx-4">
-          <Link to="/history" className="feature-card">
+          <div className="feature-card" onClick={() => navigate('/history')}>
             <div className="mb-4 bg-taxi-yellow/30 p-4 rounded-full">
               <History className="h-8 w-8 text-gray-800" />
             </div>
             <span className="text-sm font-semibold text-gray-800">Historique</span>
-          </Link>
+          </div>
           
-          <Link to="/documents" className="feature-card">
+          <div className="feature-card" onClick={() => navigate('/documents')}>
             <div className="mb-4 bg-taxi-yellow/30 p-4 rounded-full">
               <FileCheck className="h-8 w-8 text-gray-800" />
             </div>
             <span className="text-sm font-semibold text-gray-800">Scanner Document</span>
-          </Link>
+          </div>
           
-          <Link to="/settings" className="feature-card">
+          <div className="feature-card" onClick={() => navigate('/settings')}>
             <div className="mb-4 bg-taxi-yellow/30 p-4 rounded-full">
               <Settings className="h-8 w-8 text-gray-800" />
             </div>
             <span className="text-sm font-semibold text-gray-800">Paramètres</span>
-          </Link>
+          </div>
           
-          <Link to="/help" className="feature-card">
+          <div className="feature-card" onClick={() => navigate('/help')}>
             <div className="mb-4 bg-taxi-yellow/30 p-4 rounded-full">
               <HelpCircle className="h-8 w-8 text-gray-800" />
             </div>
             <span className="text-sm font-semibold text-gray-800">Aide</span>
-          </Link>
+          </div>
         </div>
       </main>
       
