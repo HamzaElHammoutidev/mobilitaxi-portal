@@ -48,13 +48,9 @@ const MobileLayout: React.FC<MobileLayoutProps> = ({
     }
   };
   
+  // Top menu items that will be shown in the sidebar
   const menuItems = [
-    { title: 'Accueil', icon: Home, path: '/' },
-    { title: 'Mes véhicules', icon: Car, path: '/vehicles' },
-    { title: 'Rendez-vous', icon: Calendar, path: '/appointments' },
-    { title: 'Services', icon: FileText, path: '/services' },
     { title: 'Centres', icon: MapPin, path: '/locations' },
-    { title: 'Profil', icon: User, path: '/profile' },
     { title: 'Paramètres', icon: Settings, path: '/settings' },
     { title: 'Aide & Support', icon: HelpCircle, path: '/help' },
   ];
@@ -124,6 +120,7 @@ const MobileLayout: React.FC<MobileLayoutProps> = ({
           <Separator />
           
           <div className="p-2">
+            {/* Main menu items are now only shown in the sidebar if they're not in the bottom nav */}
             {menuItems.map((item) => (
               <SheetClose asChild key={item.path}>
                 <Link 
@@ -144,6 +141,25 @@ const MobileLayout: React.FC<MobileLayoutProps> = ({
               </SheetClose>
             ))}
             
+            {/* Profile links */}
+            <SheetClose asChild>
+              <Link 
+                to="/profile"
+                className={cn(
+                  "flex items-center gap-3 p-3 rounded-md",
+                  location.pathname === "/profile" 
+                    ? "bg-taxi-yellow/10 text-taxi-yellow" 
+                    : "hover:bg-gray-100"
+                )}
+              >
+                <User className={cn(
+                  "h-5 w-5",
+                  location.pathname === "/profile" ? "text-taxi-yellow" : ""
+                )} />
+                <span className="font-medium">Mon profil</span>
+              </Link>
+            </SheetClose>
+            
             <button
               className="flex items-center gap-3 p-3 rounded-md text-red-500 hover:bg-red-50 w-full text-left"
               onClick={handleLogout}
@@ -160,7 +176,7 @@ const MobileLayout: React.FC<MobileLayoutProps> = ({
         {children}
       </main>
       
-      {/* Using the unified BottomNavbar component */}
+      {/* Bottom navigation bar for main features */}
       <BottomNavbar />
     </div>
   );

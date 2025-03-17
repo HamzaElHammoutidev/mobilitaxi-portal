@@ -15,7 +15,7 @@ const PersonalInfo = () => {
   // Since updateUser doesn't exist in AuthContext, we'll use the toast to simulate
   const [name, setName] = useState(user?.name || '');
   const [email, setEmail] = useState(user?.email || '');
-  const [phone, setPhone] = useState(user?.phone || '');
+  const [phone, setPhone] = useState(user?.phoneNumber || ''); // Changed from user?.phone to user?.phoneNumber
   
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
