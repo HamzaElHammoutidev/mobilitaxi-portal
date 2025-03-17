@@ -10,6 +10,15 @@ import NotFound from "./pages/NotFound";
 import Login from "./pages/Auth/Login";
 import Register from "./pages/Auth/Register";
 import RegistrationSuccess from "./pages/Auth/RegistrationSuccess";
+import Home from "./pages/Home";
+import Profile from "./pages/Profile/Profile";
+import Settings from "./pages/Settings/Settings";
+import Help from "./pages/Help/Help";
+import Search from "./pages/Search/Search";
+import Services from "./pages/Services/Services";
+import AppointmentsList from "./pages/Appointments/AppointmentsList";
+import AppointmentNew from "./pages/Appointments/AppointmentNew";
+import AppointmentDetails from "./pages/Appointments/AppointmentDetails";
 
 const queryClient = new QueryClient();
 
@@ -22,16 +31,26 @@ const App = () => (
         <BrowserRouter>
           <Routes>
             <Route path="/" element={<Index />} />
+            <Route path="/home" element={<Home />} />
             <Route path="/login" element={<Login />} />
             <Route path="/register" element={<Register />} />
             <Route path="/registration-success" element={<RegistrationSuccess />} />
-            <Route path="/search" element={<NotFound />} />
-            <Route path="/services" element={<NotFound />} />
-            <Route path="/profile" element={<NotFound />} />
-            <Route path="/history" element={<NotFound />} />
-            <Route path="/documents" element={<NotFound />} />
-            <Route path="/settings" element={<NotFound />} />
-            <Route path="/help" element={<NotFound />} />
+            
+            {/* Appointments */}
+            <Route path="/appointments" element={<AppointmentsList />} />
+            <Route path="/appointments/new" element={<AppointmentNew />} />
+            <Route path="/appointments/:id" element={<AppointmentDetails />} />
+            
+            {/* Profile & Settings */}
+            <Route path="/profile" element={<Profile />} />
+            <Route path="/settings" element={<Settings />} />
+            <Route path="/help" element={<Help />} />
+            
+            {/* Services */}
+            <Route path="/services" element={<Services />} />
+            <Route path="/search" element={<Search />} />
+            
+            {/* Catch all */}
             <Route path="*" element={<NotFound />} />
           </Routes>
         </BrowserRouter>
