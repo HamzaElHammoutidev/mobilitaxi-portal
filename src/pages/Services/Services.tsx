@@ -37,26 +37,6 @@ const Services = () => {
           </CardContent>
         </Card>
         
-        {/* Quote request section */}
-        <Card className="mb-6 bg-taxi-blue/10 border-taxi-blue">
-          <CardContent className="p-4">
-            <div className="flex justify-between items-start">
-              <div>
-                <h3 className="font-medium mb-1">Demander un devis</h3>
-                <p className="text-sm text-gray-600 mb-3">
-                  Obtenez un devis personnalisé pour vos besoins
-                </p>
-                <Button asChild variant="outline" className="border-taxi-blue text-taxi-dark hover:bg-taxi-blue/20">
-                  <Link to="/services/request-quote">Demander un devis</Link>
-                </Button>
-              </div>
-              <div className="bg-taxi-blue rounded-full p-3">
-                <FileText className="h-6 w-6 text-white" />
-              </div>
-            </div>
-          </CardContent>
-        </Card>
-        
         {/* Recent services section */}
         <h3 className="font-medium mb-3">Services récents</h3>
         
