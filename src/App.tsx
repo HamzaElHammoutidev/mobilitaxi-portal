@@ -14,6 +14,7 @@ import Home from '@/pages/Home';
 import Search from '@/pages/Search/Search';
 import Services from '@/pages/Services/Services';
 import ServicesList from '@/pages/Services/ServicesList';
+import ServiceDetails from '@/pages/Services/ServiceDetails';
 import QuotesList from '@/pages/Services/QuotesList';
 import QuoteDetails from '@/pages/Services/QuoteDetails';
 import VehiclesList from '@/pages/Vehicles/VehiclesList';
@@ -67,6 +68,7 @@ function App() {
                   {/* Service routes */}
                   <Route path="/services" element={<Services />} />
                   <Route path="/services/list" element={<ServicesList />} />
+                  <Route path="/services/:id" element={<ServiceDetails />} />
                   <Route path="/services/quotes" element={<QuotesList />} />
                   <Route path="/services/quotes/:id" element={<QuoteDetails />} />
                   
