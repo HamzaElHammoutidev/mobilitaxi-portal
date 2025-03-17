@@ -39,6 +39,7 @@ interface VehicleContextType {
   addFolder: (name: string, icon?: string, color?: string) => Promise<void>;
   updateFolder: (id: string, name: string, icon?: string, color?: string) => Promise<void>;
   deleteFolder: (id: string) => Promise<void>;
+  moveDocumentToFolder: (vehicleId: string, documentId: string, folderId: string | null) => Promise<void>;
 }
 
 const VehicleContext = createContext<VehicleContextType | undefined>(undefined);
@@ -292,6 +293,45 @@ export const VehicleProvider: React.FC<VehicleProviderProps> = ({ children }) =>
     }
   };
 
+  // New function to move a document to a different folder
+  const moveDocumentToFolder = async (vehicleId: string, documentId: string, folderId: string | null) => {
+    try {
+      setLoading(true);
+      
+      // Mock API call
+      await new Promise(resolve => setTimeout(resolve, 500));
+      
+      const updatedVehicles = vehicles.map(vehicle => {
+        if (vehicle.id === vehicleId) {
+          const updatedDocuments = vehicle.documents.map(doc => {
+            if (doc.id === documentId) {
+              return { ...doc, folderId: folderId || undefined };
+            }
+            return doc;
+          });
+          
+          return {
+            ...vehicle,
+            documents: updatedDocuments
+          };
+        }
+        return vehicle;
+      });
+      
+      setVehicles(updatedVehicles);
+      localStorage.setItem('taxiVehicles', JSON.stringify(updatedVehicles));
+      
+      toast.success(folderId 
+        ? `Document déplacé vers le dossier avec succès` 
+        : `Document retiré du dossier avec succès`);
+    } catch (error) {
+      toast.error('Échec du déplacement du document');
+      console.error(error);
+    } finally {
+      setLoading(false);
+    }
+  };
+
   return (
     <VehicleContext.Provider
       value={{
@@ -302,7 +342,8 @@ export const VehicleProvider: React.FC<VehicleProviderProps> = ({ children }) =>
         uploadDocument,
         addFolder,
         updateFolder,
-        deleteFolder
+        deleteFolder,
+        moveDocumentToFolder
       }}
     >
       {children}

@@ -1,7 +1,7 @@
 
 import React, { useState } from 'react';
 import { Link } from 'react-router-dom';
-import { File, FileText, Calendar, Search, AlertCircle, PlusCircle, FolderPlus, Folder } from 'lucide-react';
+import { File, FileText, Calendar, Search, AlertCircle, PlusCircle, FolderPlus, Folder, MoreVertical, FolderInput } from 'lucide-react';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
@@ -11,10 +11,11 @@ import { Sheet, SheetContent, SheetDescription, SheetHeader, SheetTitle, SheetTr
 import { Dialog, DialogContent, DialogDescription, DialogFooter, DialogHeader, DialogTitle, DialogTrigger } from '@/components/ui/dialog';
 import { Label } from '@/components/ui/label';
 import { Separator } from '@/components/ui/separator';
+import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuTrigger } from '@/components/ui/dropdown-menu';
+import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
 import { toast } from 'sonner';
 import MobileLayout from '@/components/layout/MobileLayout';
 import { useVehicles, Document, DocumentFolder } from '@/contexts/VehicleContext';
-import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from '@/components/ui/table';
 
 interface DocumentWithVehicle extends Document {
   vehicleId: string;
@@ -23,11 +24,13 @@ interface DocumentWithVehicle extends Document {
 }
 
 const DocumentsList = () => {
-  const { vehicles, folders, addFolder, updateFolder, deleteFolder } = useVehicles();
+  const { vehicles, folders, addFolder, updateFolder, deleteFolder, moveDocumentToFolder } = useVehicles();
   const [searchTerm, setSearchTerm] = useState('');
   const [selectedFolderId, setSelectedFolderId] = useState<string | 'all'>('all');
   const [newFolderName, setNewFolderName] = useState('');
   const [editingFolder, setEditingFolder] = useState<DocumentFolder | null>(null);
+  const [activeDocumentId, setActiveDocumentId] = useState<{docId: string, vehicleId: string} | null>(null);
+  const [showMoveToFolderDialog, setShowMoveToFolderDialog] = useState(false);
   
   // Collect all documents from all vehicles
   const allDocuments: DocumentWithVehicle[] = vehicles.flatMap(vehicle => 
@@ -84,7 +87,29 @@ const DocumentsList = () => {
   const handleDeleteFolder = (folderId: string) => {
     if (confirm('Êtes-vous sûr de vouloir supprimer ce dossier ? Les documents ne seront pas supprimés.')) {
       deleteFolder(folderId);
+      if (selectedFolderId === folderId) {
+        setSelectedFolderId('all');
+      }
     }
+  };
+
+  const handleMoveToFolder = async (folderId: string | null) => {
+    if (!activeDocumentId) return;
+    
+    await moveDocumentToFolder(
+      activeDocumentId.vehicleId,
+      activeDocumentId.docId,
+      folderId
+    );
+    
+    setShowMoveToFolderDialog(false);
+    setActiveDocumentId(null);
+  };
+  
+  const getFolderBadgeColor = (folderId?: string) => {
+    if (!folderId) return "bg-gray-100 text-gray-800";
+    const folder = folders.find(f => f.id === folderId);
+    return folder?.color || "bg-blue-100 text-blue-800";
   };
   
   return (
@@ -150,8 +175,8 @@ const DocumentsList = () => {
                                       <Label htmlFor="folder-name">Nom du dossier</Label>
                                       <Input 
                                         id="folder-name" 
-                                        value={editingFolder?.name || ''} 
-                                        onChange={(e) => setEditingFolder(prev => prev ? {...prev, name: e.target.value} : null)} 
+                                        value={editingFolder?.name || folder.name} 
+                                        onChange={(e) => setEditingFolder({...folder, name: e.target.value})} 
                                         autoFocus 
                                       />
                                     </div>
@@ -265,7 +290,27 @@ const DocumentsList = () => {
                             </Badge>
                           )}
                         </div>
-                        <FileText className="h-8 w-8 text-taxi-blue flex-shrink-0" />
+                        <div className="flex items-center">
+                          <DropdownMenu>
+                            <DropdownMenuTrigger asChild>
+                              <Button variant="ghost" size="icon" className="h-8 w-8">
+                                <MoreVertical className="h-4 w-4" />
+                              </Button>
+                            </DropdownMenuTrigger>
+                            <DropdownMenuContent align="end">
+                              <DropdownMenuItem 
+                                onClick={() => {
+                                  setActiveDocumentId({docId: doc.id, vehicleId: doc.vehicleId});
+                                  setShowMoveToFolderDialog(true);
+                                }}
+                              >
+                                <FolderInput className="h-4 w-4 mr-2" />
+                                Déplacer vers un dossier
+                              </DropdownMenuItem>
+                            </DropdownMenuContent>
+                          </DropdownMenu>
+                          <FileText className="h-8 w-8 text-taxi-blue flex-shrink-0" />
+                        </div>
                       </div>
                     </CardContent>
                   </Card>
@@ -311,7 +356,27 @@ const DocumentsList = () => {
                             </Badge>
                           )}
                         </div>
-                        <FileText className="h-8 w-8 text-red-500 flex-shrink-0" />
+                        <div className="flex items-center">
+                          <DropdownMenu>
+                            <DropdownMenuTrigger asChild>
+                              <Button variant="ghost" size="icon" className="h-8 w-8">
+                                <MoreVertical className="h-4 w-4" />
+                              </Button>
+                            </DropdownMenuTrigger>
+                            <DropdownMenuContent align="end">
+                              <DropdownMenuItem 
+                                onClick={() => {
+                                  setActiveDocumentId({docId: doc.id, vehicleId: doc.vehicleId});
+                                  setShowMoveToFolderDialog(true);
+                                }}
+                              >
+                                <FolderInput className="h-4 w-4 mr-2" />
+                                Déplacer vers un dossier
+                              </DropdownMenuItem>
+                            </DropdownMenuContent>
+                          </DropdownMenu>
+                          <FileText className="h-8 w-8 text-red-500 flex-shrink-0" />
+                        </div>
                       </div>
                     </CardContent>
                   </Card>
@@ -346,6 +411,38 @@ const DocumentsList = () => {
           </Link>
         </Button>
       </div>
+
+      {/* Move to folder dialog */}
+      <Dialog open={showMoveToFolderDialog} onOpenChange={setShowMoveToFolderDialog}>
+        <DialogContent>
+          <DialogHeader>
+            <DialogTitle>Déplacer vers un dossier</DialogTitle>
+            <DialogDescription>
+              Choisissez un dossier pour ce document ou retirez-le d'un dossier.
+            </DialogDescription>
+          </DialogHeader>
+          
+          <div className="py-4">
+            <Select onValueChange={(value) => handleMoveToFolder(value === "none" ? null : value)}>
+              <SelectTrigger>
+                <SelectValue placeholder="Sélectionner un dossier" />
+              </SelectTrigger>
+              <SelectContent>
+                <SelectItem value="none">Aucun dossier</SelectItem>
+                {folders.map(folder => (
+                  <SelectItem key={folder.id} value={folder.id}>{folder.name}</SelectItem>
+                ))}
+              </SelectContent>
+            </Select>
+          </div>
+          
+          <DialogFooter>
+            <Button variant="outline" onClick={() => setShowMoveToFolderDialog(false)}>
+              Annuler
+            </Button>
+          </DialogFooter>
+        </DialogContent>
+      </Dialog>
     </MobileLayout>
   );
 };
