@@ -8,32 +8,40 @@ const BottomNavbar: React.FC = () => {
   const location = useLocation();
   
   const navItems = [
-    { icon: Home, label: 'Home', path: '/home' },
-    { icon: FileText, label: 'Services', path: '/services' },
-    { icon: BookOpen, label: 'Documents', path: '/documents' },
-    { icon: Search, label: 'Search', path: '/search' },
-    { icon: User, label: 'Profile', path: '/profile' },
+    { title: 'Accueil', icon: Home, path: '/' },
+    { title: 'Recherche', icon: Search, path: '/search' },
+    { title: 'Services', icon: FileText, path: '/services' },
+    { title: 'Dossiers', icon: BookOpen, path: '/documents' },
+    { title: 'Profil', icon: User, path: '/profile' },
   ];
   
   return (
-    <div className="bottom-nav max-w-lg mx-auto">
-      {navItems.map((item) => {
-        const isActive = location.pathname.startsWith(item.path);
-        return (
-          <Link 
-            key={item.path} 
-            to={item.path}
-            className={cn(
-              "flex flex-col items-center justify-center py-1",
-              isActive ? "text-amber-500" : "text-gray-500"
-            )}
-          >
-            <item.icon className={cn("h-6 w-6", isActive ? "text-amber-500" : "text-gray-500")} />
-            <span className="text-xs mt-1">{item.label}</span>
-          </Link>
-        );
-      })}
-    </div>
+    <nav className="fixed bottom-0 left-0 right-0 bg-white border-t border-gray-200 flex justify-around items-center p-3 shadow-lg">
+      {navItems.map((item) => (
+        <Link 
+          key={item.path}
+          to={item.path} 
+          className={cn(
+            "flex flex-col items-center",
+            (location.pathname === item.path || 
+             (item.path !== '/' && location.pathname.startsWith(item.path)))
+              ? "text-[#FFD500]" 
+              : "text-gray-600"
+          )}
+        >
+          <div className={cn(
+            "p-1",
+            (location.pathname === item.path || 
+             (item.path !== '/' && location.pathname.startsWith(item.path))) 
+              ? "text-[#FFD500]" 
+              : "text-gray-600"
+          )}>
+            <item.icon size={24} />
+          </div>
+          <span className="text-xs">{item.title}</span>
+        </Link>
+      ))}
+    </nav>
   );
 };
 

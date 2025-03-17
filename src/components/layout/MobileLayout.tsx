@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { Link, useLocation, useNavigate } from 'react-router-dom';
-import { Car, FileText, MapPin, X, User, LogOut, HelpCircle, Wallet, Star, Settings } from 'lucide-react';
+import { Home, Calendar, Car, FileText, MapPin, Menu, Settings, X, User, LogOut, HelpCircle, Wallet, Star } from 'lucide-react';
 import { cn } from '@/lib/utils';
 import { Button } from '@/components/ui/button';
 import { Sheet, SheetContent, SheetHeader, SheetTitle, SheetClose } from '@/components/ui/sheet';
@@ -9,21 +9,20 @@ import { Separator } from '@/components/ui/separator';
 import { useAuth } from '@/contexts/AuthContext';
 import { toast } from 'sonner';
 import BottomNavbar from './BottomNavbar';
-import HeaderWithAvatar from './HeaderWithAvatar';
+import { NavigationMenu, NavigationMenuContent, NavigationMenuItem, NavigationMenuLink, NavigationMenuList, NavigationMenuTrigger, navigationMenuTriggerStyle } from '@/components/ui/navigation-menu';
 
 interface MobileLayoutProps {
   children: React.ReactNode;
   title?: string;
   showBackButton?: boolean;
   onBack?: () => void;
-  showHeader?: boolean;
 }
 
 const MobileLayout: React.FC<MobileLayoutProps> = ({ 
   children, 
+  title, 
   showBackButton = false,
-  onBack,
-  showHeader = true
+  onBack
 }) => {
   const location = useLocation();
   const navigate = useNavigate();
@@ -57,30 +56,57 @@ const MobileLayout: React.FC<MobileLayoutProps> = ({
   ];
   
   return (
-    <div className="app-container flex flex-col min-h-screen bg-gray-50">
-      {showBackButton ? (
-        <header className="bg-white p-4 flex items-center">
-          <Button 
-            variant="ghost" 
-            size="icon" 
-            onClick={handleBack}
-            className="text-gray-600 hover:bg-gray-100 mr-1"
-          >
-            <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="lucide lucide-chevron-left">
-              <path d="m15 18-6-6 6-6"/>
-            </svg>
-          </Button>
+    <div className="app-container flex flex-col min-h-screen bg-gray-100">
+      <header className="bg-white p-4 flex items-center justify-between shadow-sm">
+        <div className="flex items-center space-x-3">
+          {showBackButton ? (
+            <Button 
+              variant="ghost" 
+              size="icon" 
+              onClick={handleBack}
+              className="text-gray-600 hover:bg-gray-100 mr-1"
+            >
+              <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="lucide lucide-chevron-left">
+                <path d="m15 18-6-6 6-6"/>
+              </svg>
+            </Button>
+          ) : null}
           
           <div className="flex items-center">
             <Car size={18} className="text-gray-600 mr-2" />
             <h1 className="text-lg font-medium text-gray-800">
-              Centre du Taxi
+              {title || 'Centre du Taxi'}
             </h1>
           </div>
-        </header>
-      ) : (
-        showHeader && <HeaderWithAvatar onMenuOpen={() => setSidebarOpen(true)} />
-      )}
+        </div>
+        
+        <div className="flex items-center gap-2">
+          <NavigationMenu className="hidden md:flex">
+            <NavigationMenuList>
+              <NavigationMenuItem>
+                <Link to="/finances" className={cn(
+                  "flex items-center px-3 py-2 text-sm font-medium rounded-md",
+                  location.pathname === "/finances" 
+                    ? "bg-gray-100 text-gray-800" 
+                    : "text-gray-600 hover:bg-gray-50"
+                )}>
+                  <Wallet className="mr-2 h-4 w-4" />
+                  Finances
+                </Link>
+              </NavigationMenuItem>
+            </NavigationMenuList>
+          </NavigationMenu>
+          
+          <Button 
+            variant="ghost" 
+            size="icon" 
+            className="text-gray-600"
+            onClick={() => setSidebarOpen(true)}
+          >
+            <Menu className="h-5 w-5" />
+          </Button>
+        </div>
+      </header>
       
       <Sheet open={sidebarOpen} onOpenChange={setSidebarOpen}>
         <SheetContent side="right" className="w-[85%] max-w-sm p-0">
