@@ -13,14 +13,17 @@ const NotFound = () => {
       location.pathname
     );
     
-    // Handle the /documents/invoices route redirect
-    if (location.pathname === "/documents/invoices") {
-      navigate("/invoices");
-    }
+    // Redirects map for known missing routes
+    const redirects: Record<string, string> = {
+      "/documents/invoices": "/invoices",
+      "/services/history": "/history",
+      "/profile/vehicles": "/vehicles",
+      "/vehicles/add": "/vehicles"
+    };
     
-    // Handle the /services/history route redirect
-    if (location.pathname === "/services/history") {
-      navigate("/history");
+    // Check if the current path is in our redirects map
+    if (location.pathname in redirects) {
+      navigate(redirects[location.pathname]);
     }
   }, [location.pathname, navigate]);
 

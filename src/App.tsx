@@ -16,6 +16,9 @@ import Register from "./pages/Auth/Register";
 import RegistrationSuccess from "./pages/Auth/RegistrationSuccess";
 import Home from "./pages/Home";
 import Profile from "./pages/Profile/Profile";
+import PersonalInfo from "./pages/Profile/PersonalInfo";
+import Security from "./pages/Profile/Security";
+import Payments from "./pages/Profile/Payments";
 import Settings from "./pages/Settings/Settings";
 import Help from "./pages/Help/Help";
 import Search from "./pages/Search/Search";
@@ -24,6 +27,7 @@ import AppointmentsList from "./pages/Appointments/AppointmentsList";
 import AppointmentNew from "./pages/Appointments/AppointmentNew";
 import AppointmentDetails from "./pages/Appointments/AppointmentDetails";
 import VehicleDetails from "./pages/Vehicles/VehicleDetails";
+import VehiclesList from "./pages/Vehicles/VehiclesList";
 import LocationDetails from "./pages/Locations/LocationDetails";
 import ServicesList from "./pages/Services/ServicesList";
 import DocumentScan from "./pages/Documents/DocumentScan";
@@ -54,23 +58,26 @@ const App = () => (
                     <Route path="/register" element={<Register />} />
                     <Route path="/registration-success" element={<RegistrationSuccess />} />
                     
+                    {/* Profile & Settings */}
+                    <Route path="/profile" element={<Profile />} />
+                    <Route path="/profile/personal-info" element={<PersonalInfo />} />
+                    <Route path="/profile/security" element={<Security />} />
+                    <Route path="/profile/payments" element={<Payments />} />
+                    <Route path="/settings" element={<Settings />} />
+                    <Route path="/help" element={<Help />} />
+                    
                     {/* Appointments */}
                     <Route path="/appointments" element={<AppointmentsList />} />
                     <Route path="/appointments/new" element={<AppointmentNew />} />
                     <Route path="/appointments/:id" element={<AppointmentDetails />} />
                     
                     {/* Vehicles */}
+                    <Route path="/vehicles" element={<VehiclesList />} />
                     <Route path="/vehicles/:id" element={<VehicleDetails />} />
-                    <Route path="/vehicles" element={<VehicleDetails />} />
                     
                     {/* Locations */}
                     <Route path="/locations/:id" element={<LocationDetails />} />
                     <Route path="/locations" element={<LocationDetails />} />
-                    
-                    {/* Profile & Settings */}
-                    <Route path="/profile" element={<Profile />} />
-                    <Route path="/settings" element={<Settings />} />
-                    <Route path="/help" element={<Help />} />
                     
                     {/* Services */}
                     <Route path="/services" element={<Services />} />
