@@ -1,4 +1,3 @@
-
 import React, { useState } from 'react';
 import { Link, useLocation, useNavigate } from 'react-router-dom';
 import { Home, Calendar, Car, FileText, MapPin, Menu, Settings, X, User, LogOut, HelpCircle, Wallet, Star } from 'lucide-react';
@@ -49,7 +48,6 @@ const MobileLayout: React.FC<MobileLayoutProps> = ({
     }
   };
   
-  // Top menu items that will be shown in the sidebar
   const menuItems = [
     { title: 'Centres', icon: MapPin, path: '/locations' },
     { title: 'Finances', icon: Wallet, path: '/finances' },
@@ -59,47 +57,38 @@ const MobileLayout: React.FC<MobileLayoutProps> = ({
   
   return (
     <div className="app-container flex flex-col min-h-screen bg-gray-100">
-      {/* Enhanced Header */}
       <header className="bg-white p-4 flex items-center justify-between shadow-sm">
-        <div className="flex items-center">
+        <div className="flex items-center space-x-3">
           {showBackButton ? (
             <Button 
               variant="ghost" 
               size="icon" 
               onClick={handleBack}
-              className="text-gray-800 hover:bg-gray-100 mr-2"
+              className="text-gray-600 hover:bg-gray-100 mr-1"
             >
-              <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="lucide lucide-chevron-left">
+              <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="lucide lucide-chevron-left">
                 <path d="m15 18-6-6 6-6"/>
               </svg>
             </Button>
           ) : null}
+          
           <div className="flex items-center">
-            <div className="bg-[#FFD500] p-2 rounded-full mr-2 shadow-sm">
-              <Car size={20} className="text-gray-800" />
-            </div>
-            <div>
-              <h1 className="text-xl font-bold bg-gradient-to-r from-gray-800 via-gray-700 to-gray-900 bg-clip-text text-transparent">
-                {title || 'Centre du Taxi'}
-              </h1>
-              <div className="flex items-center text-xs text-gray-500">
-                <Star className="h-3 w-3 mr-1 text-[#FFD500]" />
-                <span>Service professionnel</span>
-              </div>
-            </div>
+            <Car size={18} className="text-gray-600 mr-2" />
+            <h1 className="text-lg font-medium text-gray-800">
+              {title || 'Centre du Taxi'}
+            </h1>
           </div>
         </div>
         
         <div className="flex items-center gap-2">
-          {/* Top Navigation Menu */}
           <NavigationMenu className="hidden md:flex">
             <NavigationMenuList>
               <NavigationMenuItem>
                 <Link to="/finances" className={cn(
                   "flex items-center px-3 py-2 text-sm font-medium rounded-md",
                   location.pathname === "/finances" 
-                    ? "bg-taxi-yellow/10 text-taxi-yellow" 
-                    : "text-gray-700 hover:bg-gray-100"
+                    ? "bg-gray-100 text-gray-800" 
+                    : "text-gray-600 hover:bg-gray-50"
                 )}>
                   <Wallet className="mr-2 h-4 w-4" />
                   Finances
@@ -111,15 +100,14 @@ const MobileLayout: React.FC<MobileLayoutProps> = ({
           <Button 
             variant="ghost" 
             size="icon" 
-            className="text-gray-800"
+            className="text-gray-600"
             onClick={() => setSidebarOpen(true)}
           >
-            <Menu className="h-6 w-6" />
+            <Menu className="h-5 w-5" />
           </Button>
         </div>
       </header>
       
-      {/* Sidebar */}
       <Sheet open={sidebarOpen} onOpenChange={setSidebarOpen}>
         <SheetContent side="right" className="w-[85%] max-w-sm p-0">
           <SheetHeader className="p-6 pb-2">
@@ -152,7 +140,6 @@ const MobileLayout: React.FC<MobileLayoutProps> = ({
           <Separator />
           
           <div className="p-2">
-            {/* Main menu items are now only shown in the sidebar if they're not in the bottom nav */}
             {menuItems.map((item) => (
               <SheetClose asChild key={item.path}>
                 <Link 
@@ -173,7 +160,6 @@ const MobileLayout: React.FC<MobileLayoutProps> = ({
               </SheetClose>
             ))}
             
-            {/* Profile links */}
             <SheetClose asChild>
               <Link 
                 to="/profile"
@@ -203,12 +189,10 @@ const MobileLayout: React.FC<MobileLayoutProps> = ({
         </SheetContent>
       </Sheet>
       
-      {/* Main content */}
       <main className="flex-1 pb-20">
         {children}
       </main>
       
-      {/* Bottom navigation bar for main features */}
       <BottomNavbar />
     </div>
   );
