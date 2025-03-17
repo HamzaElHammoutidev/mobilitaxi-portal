@@ -1,5 +1,5 @@
 
-import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
+import { BrowserRouter as Router, Routes, Route, Navigate } from 'react-router-dom';
 import { Toaster } from '@/components/ui/sonner';
 import Index from '@/pages/Index';
 import NotFound from '@/pages/NotFound';
@@ -12,19 +12,29 @@ import RegistrationSuccess from '@/pages/Auth/RegistrationSuccess';
 // Main app pages
 import Home from '@/pages/Home';
 import Search from '@/pages/Search/Search';
+
+// Services
 import Services from '@/pages/Services/Services';
 import ServicesList from '@/pages/Services/ServicesList';
 import ServiceDetails from '@/pages/Services/ServiceDetails';
 import QuotesList from '@/pages/Services/QuotesList';
 import QuoteDetails from '@/pages/Services/QuoteDetails';
+
+// Vehicles
 import VehiclesList from '@/pages/Vehicles/VehiclesList';
 import VehicleDetails from '@/pages/Vehicles/VehicleDetails';
+
+// Locations
 import CentersList from '@/pages/Locations/CentersList';
 import LocationDetails from '@/pages/Locations/LocationDetails';
 import LocationsMap from '@/pages/Locations/LocationsMap';
+
+// Appointments
 import AppointmentsList from '@/pages/Appointments/AppointmentsList';
 import AppointmentDetails from '@/pages/Appointments/AppointmentDetails';
 import AppointmentNew from '@/pages/Appointments/AppointmentNew';
+
+// Documents & History
 import HistoryList from '@/pages/History/HistoryList';
 import DocumentsList from '@/pages/Documents/DocumentsList';
 import DocumentScan from '@/pages/Documents/DocumentScan';
@@ -48,6 +58,7 @@ import { CenterProvider } from '@/contexts/CenterContext';
 import { AppointmentProvider } from '@/contexts/AppointmentContext';
 import { ServiceProvider } from '@/contexts/ServiceContext';
 
+// Root component
 function App() {
   return (
     <Router>
@@ -57,11 +68,13 @@ function App() {
             <AppointmentProvider>
               <ServiceProvider>
                 <Routes>
+                  {/* Public routes */}
                   <Route path="/" element={<Index />} />
                   <Route path="/login" element={<Login />} />
                   <Route path="/register" element={<Register />} />
                   <Route path="/registration-success" element={<RegistrationSuccess />} />
                   
+                  {/* Home & Search */}
                   <Route path="/home" element={<Home />} />
                   <Route path="/search" element={<Search />} />
                   
@@ -103,9 +116,10 @@ function App() {
                   <Route path="/settings" element={<Settings />} />
                   <Route path="/help" element={<Help />} />
                   
+                  {/* Not found */}
                   <Route path="*" element={<NotFound />} />
                 </Routes>
-                <Toaster />
+                <Toaster position="top-center" />
               </ServiceProvider>
             </AppointmentProvider>
           </CenterProvider>

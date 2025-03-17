@@ -89,7 +89,7 @@
 /* Custom styles for the taxi app */
 
 .bottom-nav {
-  @apply fixed bottom-0 left-0 right-0 bg-white border-t border-gray-200 flex justify-between items-center p-2 px-4;
+  @apply fixed bottom-0 left-0 right-0 bg-white border-t border-gray-200 flex justify-between items-center p-2 px-4 z-50;
 }
 
 .status-badge {
@@ -108,59 +108,38 @@
   @apply max-w-lg mx-auto;
 }
 
-/* Hero section styles */
-.hero-section {
-  @apply bg-taxi-yellow rounded-3xl p-8 mx-4 my-6 text-center;
+/* Custom animations */
+@keyframes fadeIn {
+  from { opacity: 0; transform: translateY(10px); }
+  to { opacity: 1; transform: translateY(0); }
 }
 
-.hero-title {
-  @apply text-2xl font-bold text-gray-800 mb-3;
+@keyframes scaleIn {
+  from { transform: scale(0.95); opacity: 0; }
+  to { transform: scale(1); opacity: 1; }
 }
 
-.hero-text {
-  @apply text-xl text-gray-800 mb-6;
+.animate-fade-in {
+  animation: fadeIn 0.3s ease-out;
 }
 
-.icon-group {
-  @apply flex justify-between items-center px-4 py-6;
+.animate-scale-in {
+  animation: scaleIn 0.2s ease-out;
 }
 
-.icon-item {
-  @apply flex flex-col items-center;
+/* Hover effects */
+.hover-scale {
+  @apply transition-transform duration-200 hover:scale-105;
 }
 
-.icon-container {
-  @apply bg-taxi-yellow rounded-lg p-3 mb-2;
-}
-
-.icon-label {
-  @apply text-sm font-medium text-gray-700;
-}
-
-.card-section {
-  @apply bg-white rounded-3xl p-6 mx-4 my-6 shadow-md;
-}
-
-.card-title {
-  @apply text-xl font-bold text-center mb-4;
-}
-
-.card-subtitle {
-  @apply text-center text-gray-600 mb-6;
-}
-
-.feature-grid {
-  @apply grid grid-cols-2 gap-4 mt-6;
-}
-
-.feature-card {
-  @apply bg-white rounded-3xl p-6 flex flex-col items-center shadow-md;
-}
-
-/* Add responsive font sizes for mobile */
+/* Responsive font sizes */
 @media (max-width: 640px) {
   html {
     font-size: 14px;
   }
 }
 
+/* Custom cards */
+.feature-card {
+  @apply bg-white rounded-xl p-5 shadow-sm flex flex-col items-center hover:shadow-md transition-shadow hover:bg-gray-50;
+}
