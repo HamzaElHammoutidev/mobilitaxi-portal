@@ -76,20 +76,20 @@ const Home = () => {
             </Card>
           </Link>
           
-          <Link to="/services">
+          <Link to="/services/quotes">
             <Card className="hover:bg-muted/50 transition-colors">
               <CardContent className="p-4 flex flex-col items-center text-center">
                 <FileText className="h-8 w-8 mb-2 text-taxi-blue" />
-                <span className="text-sm font-medium">Demander un devis</span>
+                <span className="text-sm font-medium">Devis</span>
               </CardContent>
             </Card>
           </Link>
           
-          <Link to="/vehicles">
+          <Link to="/invoices">
             <Card className="hover:bg-muted/50 transition-colors">
               <CardContent className="p-4 flex flex-col items-center text-center">
-                <Car className="h-8 w-8 mb-2 text-taxi-blue" />
-                <span className="text-sm font-medium">Mes véhicules</span>
+                <FileText className="h-8 w-8 mb-2 text-taxi-blue" />
+                <span className="text-sm font-medium">Factures</span>
               </CardContent>
             </Card>
           </Link>
