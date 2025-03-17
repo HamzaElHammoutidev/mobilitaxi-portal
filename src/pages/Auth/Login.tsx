@@ -6,7 +6,7 @@ import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
 import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from '@/components/ui/card';
 import { useAuth } from '@/contexts/AuthContext';
-import { Taxi } from 'lucide-react';
+import { Car } from 'lucide-react';
 import { toast } from 'sonner';
 
 const Login = () => {
@@ -41,7 +41,7 @@ const Login = () => {
       <div className="w-full max-w-md">
         <div className="text-center mb-8">
           <div className="bg-taxi-yellow p-4 rounded-full w-20 h-20 flex items-center justify-center mx-auto">
-            <Taxi size={40} className="text-taxi-dark" />
+            <Car size={40} className="text-taxi-dark" />
           </div>
           <h1 className="text-2xl font-bold mt-4 text-taxi-blue">Centre du Taxi</h1>
           <p className="text-gray-500">Portail des propriétaires et conducteurs</p>
