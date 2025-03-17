@@ -1,7 +1,7 @@
 
 import React from 'react';
 import { Link, useLocation } from 'react-router-dom';
-import { Home, History, Car, FileText, User, Banknote } from 'lucide-react';
+import { Home, Search, FileText, User } from 'lucide-react';
 import { cn } from '@/lib/utils';
 
 const BottomNavbar: React.FC = () => {
@@ -9,45 +9,35 @@ const BottomNavbar: React.FC = () => {
   
   const navItems = [
     { title: 'Accueil', icon: Home, path: '/' },
-    { title: 'Véhicules', icon: Car, path: '/vehicles' },
-    { title: 'Historique', icon: History, path: '/history' },
+    { title: 'Recherche', icon: Search, path: '/search' },
     { title: 'Services', icon: FileText, path: '/services' },
-    { title: 'Finances', icon: Banknote, path: '/finances' },
     { title: 'Profil', icon: User, path: '/profile' },
   ];
   
   return (
-    <nav className="bottom-nav">
+    <nav className="fixed bottom-0 left-0 right-0 bg-white border-t border-gray-200 flex justify-around items-center p-3 shadow-lg">
       {navItems.map((item) => (
         <Link 
           key={item.path}
           to={item.path} 
           className={cn(
-            "flex flex-col items-center text-sm",
+            "flex flex-col items-center",
             (location.pathname === item.path || 
              (item.path !== '/' && location.pathname.startsWith(item.path)))
-              ? "text-taxi-yellow font-medium" 
-              : "text-gray-500"
+              ? "text-[#FFD500]" 
+              : "text-gray-600"
           )}
         >
           <div className={cn(
-            "p-2 rounded-full",
+            "p-1",
             (location.pathname === item.path || 
              (item.path !== '/' && location.pathname.startsWith(item.path))) 
-              ? "bg-taxi-yellow/20" 
-              : ""
+              ? "text-[#FFD500]" 
+              : "text-gray-600"
           )}>
-            <item.icon 
-              size={20} 
-              className={
-                (location.pathname === item.path || 
-                 (item.path !== '/' && location.pathname.startsWith(item.path)))
-                  ? "text-taxi-yellow" 
-                  : ""
-              } 
-            />
+            <item.icon size={24} />
           </div>
-          <span>{item.title}</span>
+          <span className="text-xs">{item.title}</span>
         </Link>
       ))}
     </nav>

@@ -170,7 +170,35 @@
   }
 }
 
-/* Custom cards */
+/* New styles for the yellow taxi theme */
+.app-container {
+  @apply bg-gray-50;
+}
+
+.yellow-hero {
+  @apply bg-[#FFD500] rounded-3xl p-6 text-center shadow-md;
+}
+
+.icon-tile {
+  @apply bg-[#FFD500] p-3 rounded-lg shadow-md transform hover:scale-105 transition-transform;
+}
+
 .feature-card {
-  @apply bg-white rounded-xl p-5 shadow-sm flex flex-col items-center hover:shadow-md transition-shadow hover:bg-gray-50;
+  @apply bg-white rounded-xl p-5 shadow-sm flex flex-col items-center hover:shadow-md transition-shadow;
+}
+
+/* 3D icon effect */
+.icon-3d {
+  @apply relative;
+  transform-style: preserve-3d;
+  transform: perspective(500px) rotateX(10deg);
+  transition: transform 0.3s ease;
+}
+
+.icon-3d:hover {
+  transform: perspective(500px) rotateX(0deg) scale(1.05);
+}
+
+.icon-shadow {
+  filter: drop-shadow(2px 4px 6px rgba(0, 0, 0, 0.1));
 }
