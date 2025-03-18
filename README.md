@@ -64,6 +64,27 @@ This project is built with .
 
 Simply open [Lovable](https://lovable.dev/projects/2c01989f-af81-4195-8483-bff76e5f076c) and click on Share -> Publish.
 
+### Deploying with Docker
+
+This project includes Docker configuration for easy deployment to any server. Follow these steps:
+
+1. Make sure Docker and Docker Compose are installed on your server
+2. Clone this repository on your server
+3. Run the following commands:
+
+```sh
+# Build and start the Docker container
+docker-compose up -d
+
+# To check logs
+docker-compose logs -f
+
+# To stop the container
+docker-compose down
+```
+
+The application will be available on port 8080 of your server.
+
 ## I want to use a custom domain - is that possible?
 
 We don't support custom domains (yet). If you want to deploy your project under your own domain then we recommend using Netlify. Visit our docs for more details: [Custom domains](https://docs.lovable.dev/tips-tricks/custom-domain/)
