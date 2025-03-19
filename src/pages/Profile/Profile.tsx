@@ -1,11 +1,7 @@
+
 import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { User, Mail, LogOut, ChevronRight, Settings, FileText, Car, Calendar, CreditCard, HelpCircle, Lock } from 'lucide-react';
-import { Button } from '@/components/ui/button';
-import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar';
-import { Card, CardContent } from '@/components/ui/card';
-import { Separator } from '@/components/ui/separator';
-import { Dialog, DialogContent, DialogDescription, DialogFooter, DialogHeader, DialogTitle, DialogTrigger } from '@/components/ui/dialog';
 import { toast } from 'sonner';
 import MobileLayout from '@/components/layout/MobileLayout';
 import { useAuth } from '@/contexts/AuthContext';
@@ -33,14 +29,16 @@ const ProfileLink = ({
   };
   
   return (
-    <div className="flex items-center justify-between p-4 cursor-pointer hover:bg-gray-50" onClick={handleClick}>
+    <div className="flex items-center justify-between p-4 cursor-pointer hover:bg-base-200" onClick={handleClick}>
       <div className="flex items-center gap-3">
-        <div className="bg-taxi-yellow/10 p-2 rounded-full">
-          <Icon className="h-5 w-5 text-taxi-yellow" />
+        <div className="avatar placeholder">
+          <div className="bg-primary bg-opacity-20 text-primary rounded-full w-10 h-10">
+            <Icon className="h-5 w-5" />
+          </div>
         </div>
         <span>{label}</span>
       </div>
-      <ChevronRight className="h-5 w-5 text-gray-400" />
+      <ChevronRight className="h-5 w-5 opacity-50" />
     </div>
   );
 };
@@ -48,7 +46,6 @@ const ProfileLink = ({
 const Profile = () => {
   const navigate = useNavigate();
   const { user, logout } = useAuth();
-  const [showLogoutDialog, setShowLogoutDialog] = useState(false);
   const [isLoggingOut, setIsLoggingOut] = useState(false);
   
   const handleLogout = async () => {
@@ -69,93 +66,100 @@ const Profile = () => {
   return (
     <MobileLayout title="Profil">
       <div className="p-4">
-        <Card className="mb-6">
-          <CardContent className="p-6">
+        <div className="card bg-base-100 shadow-sm mb-6">
+          <div className="card-body p-6">
             <div className="flex items-center gap-4">
-              <Avatar className="h-16 w-16">
-                <AvatarImage src="" alt={user?.name} />
-                <AvatarFallback className="bg-taxi-yellow text-gray-800 text-xl">
+              <div className="avatar placeholder">
+                <div className="bg-primary text-primary-content rounded-full w-16 h-16 text-xl">
                   {user?.name?.charAt(0).toUpperCase()}
-                </AvatarFallback>
-              </Avatar>
+                </div>
+              </div>
               
               <div>
                 <h2 className="text-xl font-bold">{user?.name}</h2>
-                <p className="text-gray-600 flex items-center gap-1">
+                <div className="flex items-center gap-1 opacity-75">
                   <Mail className="h-4 w-4" />
                   {user?.email}
-                </p>
+                </div>
                 <div className="mt-1">
-                  <span className={cn(
-                    "inline-flex items-center px-2 py-0.5 rounded-full text-xs font-medium",
-                    user?.status === 'pending' ? "bg-amber-100 text-amber-800" : "bg-green-100 text-green-800"
+                  <div className={cn(
+                    "badge",
+                    user?.status === 'pending' ? "badge-warning" : "badge-success"
                   )}>
                     {user?.status === 'pending' ? 'En attente de validation' : 'Compte validé'}
-                  </span>
+                  </div>
                 </div>
               </div>
             </div>
-          </CardContent>
-        </Card>
+          </div>
+        </div>
         
-        <Card className="mb-6">
-          <div className="rounded-lg overflow-hidden divide-y">
+        <div className="card bg-base-100 shadow-sm mb-6">
+          <div className="card-body p-0">
             <h3 className="p-4 font-medium">Mon compte</h3>
+            <div className="divider my-0"></div>
             <ProfileLink icon={User} label="Informations personnelles" to="/profile/personal-info" />
+            <div className="divider my-0"></div>
             <ProfileLink icon={Lock} label="Sécurité" to="/profile/security" />
+            <div className="divider my-0"></div>
             <ProfileLink icon={CreditCard} label="Paiements" to="/profile/payments" />
           </div>
-        </Card>
+        </div>
         
-        <Card className="mb-6">
-          <div className="rounded-lg overflow-hidden divide-y">
+        <div className="card bg-base-100 shadow-sm mb-6">
+          <div className="card-body p-0">
             <h3 className="p-4 font-medium">Mes services</h3>
+            <div className="divider my-0"></div>
             <ProfileLink icon={Car} label="Mes véhicules" to="/vehicles" />
+            <div className="divider my-0"></div>
             <ProfileLink icon={Calendar} label="Mes rendez-vous" to="/appointments" />
+            <div className="divider my-0"></div>
             <ProfileLink icon={FileText} label="Mes devis" to="/services/quotes" />
+            <div className="divider my-0"></div>
             <ProfileLink icon={FileText} label="Mes factures" to="/invoices" />
           </div>
-        </Card>
+        </div>
         
-        <Card className="mb-6">
-          <div className="rounded-lg overflow-hidden divide-y">
+        <div className="card bg-base-100 shadow-sm mb-6">
+          <div className="card-body p-0">
             <h3 className="p-4 font-medium">Application</h3>
+            <div className="divider my-0"></div>
             <ProfileLink icon={Settings} label="Paramètres" to="/settings" />
+            <div className="divider my-0"></div>
             <ProfileLink icon={HelpCircle} label="Aide & Support" to="/help" />
-            <Dialog open={showLogoutDialog} onOpenChange={setShowLogoutDialog}>
-              <DialogTrigger asChild>
-                <div className="flex items-center justify-between p-4 cursor-pointer hover:bg-gray-50 text-red-500">
-                  <div className="flex items-center gap-3">
-                    <div className="bg-red-100 p-2 rounded-full">
-                      <LogOut className="h-5 w-5 text-red-500" />
-                    </div>
-                    <span>Déconnexion</span>
+            <div className="divider my-0"></div>
+            <div className="flex items-center justify-between p-4 cursor-pointer hover:bg-base-200 text-error" onClick={() => document.getElementById('logout-modal')?.showModal()}>
+              <div className="flex items-center gap-3">
+                <div className="avatar placeholder">
+                  <div className="bg-error bg-opacity-20 text-error rounded-full w-10 h-10">
+                    <LogOut className="h-5 w-5" />
                   </div>
                 </div>
-              </DialogTrigger>
-              <DialogContent>
-                <DialogHeader>
-                  <DialogTitle>Déconnexion</DialogTitle>
-                  <DialogDescription>
-                    Êtes-vous sûr de vouloir vous déconnecter de votre compte?
-                  </DialogDescription>
-                </DialogHeader>
-                <DialogFooter>
-                  <Button variant="outline" onClick={() => setShowLogoutDialog(false)}>
-                    Annuler
-                  </Button>
-                  <Button 
-                    variant="destructive" 
-                    onClick={handleLogout}
-                    disabled={isLoggingOut}
-                  >
-                    {isLoggingOut ? "Déconnexion en cours..." : "Déconnexion"}
-                  </Button>
-                </DialogFooter>
-              </DialogContent>
-            </Dialog>
+                <span>Déconnexion</span>
+              </div>
+            </div>
           </div>
-        </Card>
+        </div>
+        
+        {/* Logout Modal */}
+        <dialog id="logout-modal" className="modal">
+          <div className="modal-box">
+            <h3 className="font-bold text-lg">Déconnexion</h3>
+            <p className="py-4">Êtes-vous sûr de vouloir vous déconnecter de votre compte?</p>
+            <div className="modal-action">
+              <form method="dialog">
+                <button className="btn mr-2">Annuler</button>
+                <button 
+                  className="btn btn-error"
+                  onClick={handleLogout}
+                  disabled={isLoggingOut}
+                >
+                  {isLoggingOut ? "Déconnexion en cours..." : "Déconnexion"}
+                </button>
+              </form>
+            </div>
+          </div>
+        </dialog>
       </div>
     </MobileLayout>
   );

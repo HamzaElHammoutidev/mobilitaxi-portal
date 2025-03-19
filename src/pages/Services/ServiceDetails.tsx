@@ -2,12 +2,9 @@
 import React from 'react';
 import { useParams, useNavigate } from 'react-router-dom';
 import { Clock, Calendar, Car, Wrench, FileText, AlertCircle } from 'lucide-react';
-import { Button } from '@/components/ui/button';
-import { Card, CardContent } from '@/components/ui/card';
-import { Separator } from '@/components/ui/separator';
-import { useServices } from '@/contexts/ServiceContext';
-import MobileLayout from '@/components/layout/MobileLayout';
 import { toast } from 'sonner';
+import MobileLayout from '@/components/layout/MobileLayout';
+import { useServices } from '@/contexts/ServiceContext';
 
 const ServiceDetails = () => {
   const { id } = useParams<{ id: string }>();
@@ -21,11 +18,18 @@ const ServiceDetails = () => {
     return (
       <MobileLayout title="Service introuvable" showBackButton>
         <div className="p-4 text-center">
-          <AlertCircle className="mx-auto mb-4 h-12 w-12 text-red-500" />
+          <div className="avatar placeholder mb-4">
+            <div className="bg-error text-error-content rounded-full w-16 h-16 mx-auto">
+              <AlertCircle className="h-8 w-8" />
+            </div>
+          </div>
           <p>Le service demandé n'existe pas ou a été supprimé.</p>
-          <Button className="mt-4" onClick={() => navigate('/services')}>
+          <button 
+            className="btn btn-primary mt-4"
+            onClick={() => navigate('/services')}
+          >
             Retour aux services
-          </Button>
+          </button>
         </div>
       </MobileLayout>
     );
@@ -62,33 +66,35 @@ const ServiceDetails = () => {
   return (
     <MobileLayout title={service.name} showBackButton>
       <div className="p-4">
-        <Card className="mb-6">
-          <CardContent className="p-4">
+        <div className="card bg-base-100 shadow-sm mb-6">
+          <div className="card-body p-4">
             <div className="flex items-center gap-4 mb-4">
-              <div className="p-3 rounded-full bg-taxi-yellow/10 text-taxi-yellow">
-                {getServiceIcon()}
+              <div className="avatar placeholder">
+                <div className="bg-primary text-primary-content rounded-full w-12 h-12">
+                  {getServiceIcon()}
+                </div>
               </div>
               <div>
                 <h2 className="text-xl font-bold">{service.name}</h2>
-                <p className="text-gray-600">{service.category}</p>
+                <p className="opacity-75">{service.category}</p>
               </div>
             </div>
             
             <p className="mb-4">{service.description}</p>
             
             <div className="flex items-center justify-between mb-2">
-              <div className="flex items-center gap-2">
-                <Clock className="h-4 w-4 text-gray-500" />
-                <span className="text-sm">Durée estimée: {service.estimatedTime}</span>
+              <div className="badge badge-outline gap-2">
+                <Clock className="h-4 w-4" />
+                {service.estimatedTime}
               </div>
               <span className="font-bold text-lg">{service.price} €</span>
             </div>
-          </CardContent>
-        </Card>
+          </div>
+        </div>
         
         {service.category === "Inspection" && (
-          <Card className="mb-6">
-            <CardContent className="p-4">
+          <div className="card bg-base-100 shadow-sm mb-6">
+            <div className="card-body p-4">
               <h3 className="font-medium mb-2">L'inspection comprend :</h3>
               <ul className="list-disc pl-5 space-y-1">
                 <li>Vérification des points de sécurité</li>
@@ -97,44 +103,42 @@ const ServiceDetails = () => {
                 <li>Diagnostic électronique</li>
                 <li>Test des lumières et signalisation</li>
               </ul>
-            </CardContent>
-          </Card>
+            </div>
+          </div>
         )}
         
         <div className="grid grid-cols-2 gap-4 mb-6">
-          <Button
-            variant="outline"
-            className="bg-taxi-yellow/10 border-taxi-yellow text-gray-800 hover:bg-taxi-yellow/20"
+          <button
+            className="btn btn-outline"
             onClick={() => navigate('/appointments/new', { state: { serviceId: service.id } })}
           >
             <Calendar className="mr-2 h-4 w-4" />
             Rendez-vous
-          </Button>
+          </button>
           
-          <Button
-            variant="outline"
-            className="bg-taxi-blue/10 border-taxi-blue text-gray-800 hover:bg-taxi-blue/20"
+          <button
+            className="btn btn-primary"
             onClick={handleRequestQuote}
           >
             <FileText className="mr-2 h-4 w-4" />
             Demander un devis
-          </Button>
+          </button>
         </div>
         
         <h3 className="font-medium mb-2">Informations complémentaires</h3>
-        <p className="text-sm text-gray-600 mb-6">
+        <p className="text-sm opacity-75 mb-6">
           Ce service est disponible dans tous nos centres. Les rendez-vous sont généralement disponibles sous 48h. 
           Veuillez apporter votre carte grise lors de votre visite.
         </p>
         
-        <Separator className="mb-6" />
+        <div className="divider"></div>
         
-        <Button 
-          className="w-full bg-taxi-blue text-white hover:bg-taxi-blue/90"
+        <button 
+          className="btn btn-secondary w-full"
           onClick={() => navigate('/locations')}
         >
           Trouver un centre
-        </Button>
+        </button>
       </div>
     </MobileLayout>
   );

@@ -104,5 +104,25 @@ export default {
 			},
 		}
 	},
-	plugins: [require("tailwindcss-animate")],
+	plugins: [
+		require("tailwindcss-animate"),
+		require("daisyui")
+	],
+	daisyui: {
+		themes: [
+			{
+				taxiTheme: {
+					"primary": "#F7B731",
+					"secondary": "#1E3A8A",
+					"accent": "#FFC107",
+					"neutral": "#1A1A1A",
+					"base-100": "#FFFFFF",
+					"info": "#3ABFF8",
+					"success": "#36D399",
+					"warning": "#FBBD23",
+					"error": "#F87272",
+				},
+			},
+		],
+	},
 } satisfies Config;
