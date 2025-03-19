@@ -71,6 +71,44 @@ export default {
 					dark: '#1A1A1A',
 					light: '#E2E8F0',
 				},
+				// Magic UI color palette
+				magic: {
+					purple: {
+						light: '#E5DEFF',
+						DEFAULT: '#9b87f5',
+						dark: '#7E69AB'
+					},
+					blue: {
+						light: '#D3E4FD',
+						DEFAULT: '#0EA5E9',
+						dark: '#1E3A8A'
+					},
+					pink: {
+						light: '#FFDEE2',
+						DEFAULT: '#D946EF',
+						dark: '#9F1239'
+					},
+					orange: {
+						light: '#FDE1D3',
+						DEFAULT: '#F97316',
+						dark: '#C2410C'
+					},
+					green: {
+						light: '#F2FCE2',
+						DEFAULT: '#22C55E',
+						dark: '#15803D'
+					},
+					yellow: {
+						light: '#FEF7CD',
+						DEFAULT: '#EAB308',
+						dark: '#A16207'
+					},
+					gray: {
+						light: '#F1F0FB',
+						DEFAULT: '#8E9196',
+						dark: '#1A1F2C'
+					}
+				}
 			},
 			borderRadius: {
 				lg: 'var(--radius)',
@@ -101,6 +139,11 @@ export default {
 			},
 			fontFamily: {
 				'poppins': ['Poppins', 'sans-serif'],
+			},
+			textShadow: {
+				DEFAULT: '0 2px 4px rgba(0, 0, 0, 0.1)',
+				md: '0 2px 4px rgba(0, 0, 0, 0.2)',
+				lg: '0 4px 8px rgba(0, 0, 0, 0.25)',
 			},
 		}
 	},
