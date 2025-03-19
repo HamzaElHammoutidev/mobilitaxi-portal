@@ -35,7 +35,7 @@ const Index = () => {
           <div 
             className="rounded-3xl p-8 mb-6 text-center shadow-md overflow-hidden relative" 
             style={{
-              background: 'linear-gradient(135deg, #9b87f5 0%, #7E69AB 100%)',
+              background: 'linear-gradient(135deg, #ffcc33 0%, #e6b800 100%)',
             }}
           >
             <div className="absolute top-0 left-0 w-full h-full opacity-10 bg-[url('data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMjAwIiBoZWlnaHQ9IjIwMCIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj48cGF0aCBkPSJNMTAwIDAlTDE4MCA1MCAzMCA2MFoiIGZpbGw9IiNmZmYiLz48L3N2Zz4=')]"></div>
@@ -46,7 +46,7 @@ const Index = () => {
               pour l'entretien de votre taxi
             </p>
             <Button 
-              className="bg-white text-purple-700 hover:bg-purple-50 px-6 py-6 rounded-xl text-lg font-semibold shadow-lg relative z-10 transition-all duration-300"
+              className="bg-white text-yellow-600 hover:bg-yellow-50 px-6 py-6 rounded-xl text-lg font-semibold shadow-lg relative z-10 transition-all duration-300"
               onClick={() => navigate('/appointments/new')}
             >
               Prendre un rendez-vous
@@ -56,7 +56,7 @@ const Index = () => {
           {/* Quick Access Icons with Magic UI styling */}
           <div className="grid grid-cols-4 gap-4 mb-8">
             <Link to="/locations" className="flex flex-col items-center">
-              <div className="bg-purple-100 p-3 rounded-2xl mb-2 shadow-sm transform hover:scale-105 transition-all duration-300 text-purple-600">
+              <div className="bg-yellow-100 p-3 rounded-2xl mb-2 shadow-sm transform hover:scale-105 transition-all duration-300 text-yellow-600">
                 <MapPin className="h-7 w-7" />
               </div>
               <span className="text-xs font-medium text-gray-700">Géolocalisation</span>
@@ -88,9 +88,9 @@ const Index = () => {
           <Card className="mb-8 border-0 shadow-md bg-white/80 backdrop-blur-sm rounded-2xl overflow-hidden">
             <CardContent className="p-6 text-center">
               <h2 className="text-2xl font-bold mb-4 text-gray-800">Dossiers Actifs</h2>
-              <p className="text-lg mb-4 text-gray-600">Vous avez <span className="text-purple-600 font-semibold">{activeAppointmentsCount}</span> dossiers en cours.</p>
+              <p className="text-lg mb-4 text-gray-600">Vous avez <span className="text-yellow-600 font-semibold">{activeAppointmentsCount}</span> dossiers en cours.</p>
               <Button 
-                className="bg-purple-600 hover:bg-purple-700 text-white font-semibold px-6 py-2 rounded-xl shadow transition-all duration-300"
+                className="bg-yellow-500 hover:bg-yellow-600 text-white font-semibold px-6 py-2 rounded-xl shadow transition-all duration-300"
                 onClick={() => navigate('/documents')}
               >
                 Voir les détails
@@ -103,7 +103,7 @@ const Index = () => {
             <Link to="/history">
               <Card className="border-0 shadow-sm hover:shadow-md transition-all duration-300 h-full rounded-2xl bg-gradient-to-br from-gray-50 to-gray-100">
                 <CardContent className="p-5 flex flex-col items-center justify-center">
-                  <div className="bg-indigo-100 p-4 rounded-xl mb-3 text-indigo-600">
+                  <div className="bg-yellow-100 p-4 rounded-xl mb-3 text-yellow-600">
                     <History className="h-7 w-7" />
                   </div>
                   <h3 className="font-semibold text-gray-800">Historique</h3>
@@ -125,7 +125,7 @@ const Index = () => {
             <Link to="/settings">
               <Card className="border-0 shadow-sm hover:shadow-md transition-all duration-300 h-full rounded-2xl bg-gradient-to-br from-gray-50 to-gray-100">
                 <CardContent className="p-5 flex flex-col items-center justify-center">
-                  <div className="bg-purple-100 p-4 rounded-xl mb-3 text-purple-600">
+                  <div className="bg-yellow-100 p-4 rounded-xl mb-3 text-yellow-600">
                     <Settings className="h-7 w-7" />
                   </div>
                   <h3 className="font-semibold text-gray-800">Paramètres</h3>

@@ -27,14 +27,14 @@ const BottomNavbar: React.FC = () => {
             "p-1 rounded-full transition-all duration-300",
             (location.pathname === item.path || 
              (item.path !== '/' && location.pathname.startsWith(item.path))) 
-              ? "bg-purple-100 text-purple-600" 
-              : "text-gray-500 hover:text-purple-400"
+              ? "bg-yellow-100 text-yellow-600" 
+              : "text-gray-500 hover:text-yellow-400"
           )}>
             <item.icon size={20} strokeWidth={2} className={cn(
               "transition-all duration-300",
               (location.pathname === item.path || 
                (item.path !== '/' && location.pathname.startsWith(item.path))) 
-                ? "text-purple-600" 
+                ? "text-yellow-600" 
                 : ""
             )} />
           </div>
@@ -42,7 +42,7 @@ const BottomNavbar: React.FC = () => {
             "text-xs mt-1 font-medium transition-all duration-300",
             (location.pathname === item.path || 
              (item.path !== '/' && location.pathname.startsWith(item.path)))
-              ? "text-purple-600" 
+              ? "text-yellow-600" 
               : "text-gray-500"
           )}>
             {item.title}

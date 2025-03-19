@@ -26,7 +26,7 @@ export default {
 				background: 'hsl(var(--background))',
 				foreground: 'hsl(var(--foreground))',
 				primary: {
-					DEFAULT: 'hsl(var(--primary))',
+					DEFAULT: '#ffcc33',
 					foreground: 'hsl(var(--primary-foreground))'
 				},
 				secondary: {
@@ -65,7 +65,7 @@ export default {
 				},
 				// Taxi app specific colors
 				taxi: {
-					yellow: '#F7B731',
+					yellow: '#ffcc33',
 					blue: '#1E3A8A',
 					gray: '#F8FAFC',
 					dark: '#1A1A1A',
@@ -100,7 +100,7 @@ export default {
 					},
 					yellow: {
 						light: '#FEF7CD',
-						DEFAULT: '#EAB308',
+						DEFAULT: '#ffcc33',
 						dark: '#A16207'
 					},
 					gray: {
@@ -149,3 +149,4 @@ export default {
 	},
 	plugins: [require("tailwindcss-animate")],
 } satisfies Config;
+
