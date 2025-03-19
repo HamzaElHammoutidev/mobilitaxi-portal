@@ -16,7 +16,7 @@ const BottomNavbar: React.FC = () => {
   ];
   
   return (
-    <div className="btm-nav btm-nav-sm bg-base-100 shadow-lg z-50">
+    <div className="btm-nav btm-nav-sm z-50 shadow-lg">
       {navItems.map((item) => (
         <Link 
           key={item.path}

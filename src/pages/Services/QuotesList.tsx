@@ -47,7 +47,7 @@ const QuotesList = () => {
                     <div className="flex justify-between items-center">
                       <div className="flex items-center gap-3">
                         <div className="avatar placeholder">
-                          <div className="bg-primary text-primary-content rounded-full w-12">
+                          <div className="bg-primary/20 text-primary rounded-full w-12">
                             <FileText className="h-6 w-6" />
                           </div>
                         </div>
@@ -72,16 +72,23 @@ const QuotesList = () => {
             ))}
           </div>
         ) : (
-          <div className="text-center py-12">
-            <div className="avatar placeholder">
-              <div className="bg-neutral-content text-neutral rounded-full w-24 h-24 mx-auto mb-4">
-                <AlertCircle className="h-12 w-12" />
+          <div className="card bg-base-100 shadow-sm">
+            <div className="card-body items-center text-center py-12">
+              <div className="avatar placeholder mb-4">
+                <div className="bg-base-300 text-base-content rounded-full w-24 h-24 flex items-center justify-center">
+                  <AlertCircle className="h-12 w-12" />
+                </div>
+              </div>
+              <h3 className="text-lg font-medium">Aucun devis</h3>
+              <p className="mt-1 text-sm opacity-75">
+                Vous n'avez pas encore de devis. Demandez un devis pour commencer.
+              </p>
+              <div className="card-actions justify-center mt-4">
+                <Link to="/services/quotes/request" className="btn btn-primary">
+                  Demander un devis
+                </Link>
               </div>
             </div>
-            <h3 className="text-lg font-medium">Aucun devis</h3>
-            <p className="mt-1 text-sm opacity-75">
-              Vous n'avez pas encore de devis. Demandez un devis pour commencer.
-            </p>
           </div>
         )}
       </div>
