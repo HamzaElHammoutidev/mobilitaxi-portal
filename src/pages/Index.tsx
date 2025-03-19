@@ -53,7 +53,7 @@ const Index = () => {
             </Button>
           </div>
           
-          {/* Quick Access Icons with Magic UI styling */}
+          {/* Quick Access Icons with shadcn styling */}
           <div className="grid grid-cols-4 gap-4 mb-8">
             <Link to="/locations" className="flex flex-col items-center">
               <div className="bg-yellow-100 p-3 rounded-2xl mb-2 shadow-sm transform hover:scale-105 transition-all duration-300 text-yellow-600">
