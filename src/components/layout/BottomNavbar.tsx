@@ -16,37 +16,29 @@ const BottomNavbar: React.FC = () => {
   ];
   
   return (
-    <nav className="fixed bottom-0 left-0 right-0 bg-white border-t border-gray-100 flex justify-around items-center p-3 shadow-lg backdrop-blur-sm bg-white/90 z-50">
+    <nav className="fixed bottom-0 left-0 right-0 bg-white border-t border-gray-200 flex justify-around items-center p-3 shadow-lg">
       {navItems.map((item) => (
         <Link 
           key={item.path}
           to={item.path} 
-          className="flex flex-col items-center"
-        >
-          <div className={cn(
-            "p-1 rounded-full transition-all duration-300",
-            (location.pathname === item.path || 
-             (item.path !== '/' && location.pathname.startsWith(item.path))) 
-              ? "bg-yellow-100 text-yellow-600" 
-              : "text-gray-500 hover:text-yellow-400"
-          )}>
-            <item.icon size={20} strokeWidth={2} className={cn(
-              "transition-all duration-300",
-              (location.pathname === item.path || 
-               (item.path !== '/' && location.pathname.startsWith(item.path))) 
-                ? "text-yellow-600" 
-                : ""
-            )} />
-          </div>
-          <span className={cn(
-            "text-xs mt-1 font-medium transition-all duration-300",
+          className={cn(
+            "flex flex-col items-center",
             (location.pathname === item.path || 
              (item.path !== '/' && location.pathname.startsWith(item.path)))
-              ? "text-yellow-600" 
-              : "text-gray-500"
+              ? "text-[#FFD500]" 
+              : "text-gray-600"
+          )}
+        >
+          <div className={cn(
+            "p-1",
+            (location.pathname === item.path || 
+             (item.path !== '/' && location.pathname.startsWith(item.path))) 
+              ? "text-[#FFD500]" 
+              : "text-gray-600"
           )}>
-            {item.title}
-          </span>
+            <item.icon size={24} />
+          </div>
+          <span className="text-xs">{item.title}</span>
         </Link>
       ))}
     </nav>
